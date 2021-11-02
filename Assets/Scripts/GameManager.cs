@@ -8,6 +8,14 @@ public class GameManager : MonoBehaviour
     Player player = new Player();
     Enemy enemy = new Enemy();
 
+    /// <summary>
+    /// 0 - empty, 1 - ship, 2 - miss, 3 - hit
+    /// </summary>
+    public Sprite[] spriteList;
+
+    public GameObject boardElement;
+    public GameObject boardElementsParent;
+
     public int turnCount = 1;
     public string boardVerticalSize { get; set; }
     public string boardHorizontalSize { get; set; }
@@ -17,6 +25,56 @@ public class GameManager : MonoBehaviour
     public int difficultyIndex { get; set; }
     public int playerVerticalAttackCoord { get; set; }
     public int playerHorizontalAttackCoord { get; set; }
+
+
+    public static void PrintPlayerGrid(int lastHorizontalGridPos, int lastVerticalGridPos, int[,] playerGrid)
+    {
+        for (int i = 1; i < lastHorizontalGridPos; i++)
+        {
+            if (i >= 10)
+            {
+                Console.Write($"{i} ");
+            }
+            else
+            {
+                Console.Write($"{i}  ");
+            }
+
+            for (int j = 1; j < lastVerticalGridPos; j++)
+            {
+                Console.Write(string.Format("{0} ", playerGrid[i, j]));
+            }
+            Console.Write(Environment.NewLine);
+        }
+    }
+
+    public static void PrintEnemyGrid(int lastHorizontalGridPos, int lastVerticalGridPos, int[,] enemyGrid)
+    {
+        for (int i = 1; i < lastHorizontalGridPos; i++)
+        {
+            if (i >= 10)
+            {
+                Console.Write($"{i} ");
+            }
+            else
+            {
+                Console.Write($"{i}  ");
+            }
+
+            for (int j = 1; j < lastVerticalGridPos; j++)
+            {
+                if (enemyGrid[i, j] != 1)
+                {
+                    Console.Write(string.Format("{0} ", enemyGrid[i, j]));
+                }
+                else
+                {
+                    Console.Write("0 ");
+                }
+            }
+            Console.Write(Environment.NewLine);
+        }
+    }
 
     /// <summary>
     /// Fires an attack
