@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System;
 using UnityEngine;
 
 public class GameManager : MonoBehaviour
@@ -7,124 +8,81 @@ public class GameManager : MonoBehaviour
     Player player = new Player();
     Enemy enemy = new Enemy();
 
-    int turnCount = 1;
-    int boardVerticalSize;
-    int boardHorizontalSize;
+    public int turnCount = 1;
+    public string boardVerticalSize { get; set; }
+    public string boardHorizontalSize { get; set; }
+
+    // Hardcoding the configuration index because it doesn't even mean anything yet
+    public int configurationIndex = 1;
+    public int difficultyIndex { get; set; }
+    public int playerVerticalAttackCoord { get; set; }
+    public int playerHorizontalAttackCoord { get; set; }
+
+    /// <summary>
+    /// Fires an attack
+    /// </summary>
+    /// <param name="playerTurn">If true, then the attack is made on the enemy board</param>
+    public void Attack(bool playerTurn)
+    {
+        if (playerTurn)
+        {
+            enemy.board.LaunchAttack(playerVerticalAttackCoord, playerHorizontalAttackCoord);
+        }
+        else
+        {
+            player.board.LaunchAttack(enemy.Attack()[0], enemy.Attack()[1]);
+        }
+    }
+
+
+
+    /// <summary>
+    /// Checks if either side has been defeated
+    /// </summary>
+    /// <returns>0 - neither has lost, 1 - enemy lost, 2 - player lost</returns>
+    public int CheckDefeat()
+    {
+        if (enemy.board.CheckIfDefeated())
+        {
+            return 1;
+        }
+        else if (player.board.CheckIfDefeated())
+        {
+            return 2;
+        }
+        else
+        {
+            return 0;
+        }
+    }
+    public void PlayGame()
+    {
+        enemy.CurrentDifficulty = difficultyIndex;
+        enemy.board.PopulateBoard(player.ChooseShips(configurationIndex), Convert.ToInt32(boardVerticalSize), Convert.ToInt32(boardHorizontalSize));
+        player.board.PopulateBoard(player.ChooseShips(configurationIndex), Convert.ToInt32(boardVerticalSize), Convert.ToInt32(boardHorizontalSize));
+        enemy.PlayerBoardGrid = player.board.GeneratedBoard;
+    }
 
     void Start()
     {
-        while (true)
-        {
-            UI.AskForShipConfigurationTemplate();
-            var configurationParseSuccess = int.TryParse(Console.ReadLine(), out var configurationIndex);
+        // Set the configurationIndex through UI
+        // Set the difficultyIndex through UI
+        // Set the boardVerticalSize and boardHorizontalSize through UI
 
-            UI.AskForDifficulty();
-            var difficultyParseSuccess = int.TryParse(Console.ReadLine(), out var difficultyIndex);
-            enemy.CurrentDifficulty = difficultyIndex;
+        // Check for the input bounds inside Unity
+        //(configurationIndex >= 1 && configurationIndex <= 5)
+        //&& (difficultyIndex >= 1 && difficultyIndex <= 4)
+        //boardVerticalSize <= 26 + 2 && boardHorizontalSize <= 26 + 2 && boardVerticalSize >= 3 + 2 && boardHorizontalSize >= 3 + 2
 
-            UI.AskForBoardSize();
-            string boardSizeInput = Console.ReadLine().ToLower();
-            if (boardSizeInput.Contains('x'))
-            {
-                boardVerticalSize = Convert.ToInt32(boardSizeInput.Split('x')[0]) + 2;
-                boardHorizontalSize = Convert.ToInt32(boardSizeInput.Split('x')[1]) + 2;
-            }
-            else
-            {
-                UI.PrintWrongInput(3);
-                continue;
-            }
+        //while (true)
+        //{
+        //    Pass turnCount value to the turn counter
+        //    Print the player.board.GeneratedBoard
+        //    Print the enemy.board.GeneratedBoard
 
-            if (configurationParseSuccess && (configurationIndex >= 1 && configurationIndex <= 5) &&
-                difficultyParseSuccess && (difficultyIndex >= 1 && difficultyIndex <= 4) &&
-                boardVerticalSize <= 26 + 2 && boardHorizontalSize <= 26 + 2 && boardVerticalSize >= 3 + 2 && boardHorizontalSize >= 3 + 2)
-            {
-                enemy.board.PopulateBoard(player.ChooseShips(configurationIndex), boardVerticalSize, boardHorizontalSize);
-                player.board.PopulateBoard(player.ChooseShips(configurationIndex), boardVerticalSize, boardHorizontalSize);
-
-                enemy.PlayerBoardGrid = player.board.GeneratedBoard;
-
-                while (true)
-                {
-                    UI.PrintTurnCounter(turnCount);
-                    UI.PrintPlayerGrid(player.board.LastHorizontalGridPos, player.board.LastVerticalGridPos, player.board.GeneratedBoard);
-                    UI.PrintEnemyGrid(enemy.board.LastHorizontalGridPos, enemy.board.LastVerticalGridPos, enemy.board.GeneratedBoard);
-
-                    UI.PrintPlayerAttackPrompt();
-                    string playerInput = Console.ReadLine();
-                    if (playerInput.Contains(','))
-                    {
-                        string[] splitPlayerAttackCoords = playerInput.Split(',');
-                        var verticalAttackParseSuccess = int.TryParse(splitPlayerAttackCoords[0], out int playerVerticalAttackCoord);
-                        var horizontalAttackParseSuccess = char.TryParse(splitPlayerAttackCoords[1], out char playerHorizontalAlphabeticAttackCoord);
-                        int playerHorizontalConvertedToNumericalCoord = char.ToUpper(playerHorizontalAlphabeticAttackCoord) - 64;
-                        if ((verticalAttackParseSuccess && horizontalAttackParseSuccess) &&
-                            // Checking if player input is in bounds of grid array in both dimensions
-                            (playerVerticalAttackCoord >= player.board.FirstGridPos) &&
-                            (playerVerticalAttackCoord <= player.board.LastVerticalGridPos - 1) &&
-                            (playerHorizontalConvertedToNumericalCoord >= player.board.FirstGridPos) &&
-                            (playerHorizontalConvertedToNumericalCoord <= player.board.LastHorizontalGridPos - 1))
-                        {
-                            if (enemy.board.GeneratedBoard[playerVerticalAttackCoord, playerHorizontalConvertedToNumericalCoord] == 2 ||
-                                enemy.board.GeneratedBoard[playerVerticalAttackCoord, playerHorizontalConvertedToNumericalCoord] == 3)
-                            {
-                                UI.PrintPositionAlreadyHit();
-                            }
-                            else
-                            {
-                                if (enemy.board.LaunchAttack(playerVerticalAttackCoord, playerHorizontalConvertedToNumericalCoord))
-                                {
-                                    UI.PrintPlayerHitMessage();
-                                    if (enemy.board.CheckIfDefeated())
-                                    {
-                                        UI.PrintVictoryMessage();
-                                        break;
-                                    }
-                                    else
-                                    {
-                                        continue;
-                                    }
-                                }
-                                else
-                                {
-                                    UI.PrintMissMessage();
-                                }
-                                // TODO: This can definitely be done better... reference(?)
-                                //enemy.GetPlayerBoard(ref player.board);
-                                // Executing enemy move and checking if he hit any ship
-                                while (player.board.LaunchAttack(enemy.Attack()[0], enemy.Attack()[1]))
-                                {
-                                    UI.PrintEnemyHitOnPlayer();
-                                    if (player.board.CheckIfDefeated())
-                                    {
-                                        break;
-                                    }
-                                }
-
-                                if (player.board.CheckIfDefeated())
-                                {
-                                    UI.PrintPlayerDefeat();
-                                    break;
-                                }
-
-                                turnCount++;
-                            }
-                        }
-                        else
-                        {
-                            UI.PrintWrongInput(scenario: 1);
-                        }
-                    }
-                    else
-                    {
-                        UI.PrintWrongInput();
-                    }
-                }
-            }
-            else
-            {
-                UI.PrintWrongInput(scenario: 2);
-            }
-        }
+        //    Get player attack coordinates and assign values accordingly
+        //    Attack by invoking Attack();
+        //turnCount++;
+        //}
     }
 }
