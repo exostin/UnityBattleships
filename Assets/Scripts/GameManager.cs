@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
@@ -14,12 +16,17 @@ public class GameManager : MonoBehaviour
     /// </summary>
     public Sprite[] spriteList;
 
-    public GameObject boardElement;
+    public GameObject enemyShipPrefab;
+    public GameObject playerShipPrefab;
     public GameObject playerBoardParent;
     public GameObject enemyBoardParent;
 
+    public TextMeshProUGUI turnCounterText;
+
     public int turnCount = 1;
     public int screenHalf;
+    public int screenMaxHeight;
+    public bool IsPlayerTurn { get; set; } = true;
     public string boardVerticalSize { get; set; }
     public string boardHorizontalSize { get; set; }
 
@@ -35,16 +42,7 @@ public class GameManager : MonoBehaviour
     void Start()
     {
         screenHalf = Screen.width / 2;
-        //while (true)
-        //{
-        //    Pass turnCount value to the turn counter
-        //    Print the player.board.GeneratedBoard
-        //    Print the enemy.board.GeneratedBoard
-
-        //    Get player attack coordinates and assign values accordingly
-        //    Attack by invoking Attack();
-        //turnCount++;
-        //}
+        screenMaxHeight = Screen.height;
     } 
     public void PrintPlayerGrid(int lastHorizontalGridPos, int lastVerticalGridPos, int[,] playerGrid)
     {
@@ -52,9 +50,11 @@ public class GameManager : MonoBehaviour
         {
             for (int j = 1; j < lastVerticalGridPos; j++)
             {
-                GameObject boardElementClone = Instantiate(boardElement, new Vector2(j*60, i*60), Quaternion.identity, playerBoardParent.transform);
+                GameObject playerShip = Instantiate(playerShipPrefab, new Vector2(i*60, screenMaxHeight+(-j*60)), Quaternion.identity, playerBoardParent.transform);
 
-                boardElementClone.GetComponent<Image>().sprite = spriteList[playerGrid[i, j]];
+                playerShip.GetComponent<Image>().sprite = spriteList[playerGrid[j, i]];
+                playerShip.GetComponent<Ship>().HorCoord = i;
+                playerShip.GetComponent<Ship>().VertCoord = j;
 
                 //GameObject boardElementClone = Instantiate(boardElement);
                 //boardElementClone.transform.position = new Vector2(i, j);
@@ -69,15 +69,16 @@ public class GameManager : MonoBehaviour
         {
             for (int j = 1; j < lastVerticalGridPos; j++)
             {
-                GameObject boardElementCloneEnemy = Instantiate(boardElement, new Vector2(screenHalf + (j * 60), i * 60), Quaternion.identity, enemyBoardParent.transform);
-
-                if (enemyGrid[i, j] != 1)
+                GameObject enemyShip = Instantiate(enemyShipPrefab, new Vector2(screenHalf + (i * 60), screenMaxHeight + (-j * 60)), Quaternion.identity, enemyBoardParent.transform);
+                enemyShip.GetComponent<Ship>().HorCoord = i;
+                enemyShip.GetComponent<Ship>().VertCoord = j;
+                if (enemyGrid[j, i] != 1)
                 {
-                    boardElementCloneEnemy.GetComponent<Image>().sprite = spriteList[enemyGrid[i, j]];
+                    enemyShip.GetComponent<Image>().sprite = spriteList[enemyGrid[j, i]];
                 }
                 else
                 {
-                    boardElementCloneEnemy.GetComponent<Image>().sprite = spriteList[0];
+                    enemyShip.GetComponent<Image>().sprite = spriteList[0];
                 }
             }
         }
@@ -87,48 +88,59 @@ public class GameManager : MonoBehaviour
     /// Fires an attack
     /// </summary>
     /// <param name="playerTurn">If true, then the attack is made on the enemy board</param>
-    public void Attack(bool playerTurn)
+    public void Attack()
     {
-        if (playerTurn)
-        {
-            enemy.board.LaunchAttack(playerVerticalAttackCoord, playerHorizontalAttackCoord);
-        }
-        else
-        {
-            player.board.LaunchAttack(enemy.Attack()[0], enemy.Attack()[1]);
-        }
-    }
-
-
-
-    /// <summary>
-    /// Checks if either side has been defeated
-    /// </summary>
-    /// <returns>0 - neither has lost, 1 - enemy lost, 2 - player lost</returns>
-    public int CheckDefeat()
-    {
+        enemy.board.LaunchAttack(playerVerticalAttackCoord, playerHorizontalAttackCoord);
+        RefreshBoard(1);
         if (enemy.board.CheckIfDefeated())
         {
-            return 1;
+            SceneManager.LoadScene(0);
         }
-        else if (player.board.CheckIfDefeated())
+
+        player.board.LaunchAttack(enemy.Attack()[0], enemy.Attack()[1]);
+        RefreshBoard(2);
+        if (player.board.CheckIfDefeated())
         {
-            return 2;
+            SceneManager.LoadScene(0);
         }
-        else
-        {
-            return 0;
-        }
+        
+        turnCount++;
     }
+
     public void PlayGame()
     {
         enemy.CurrentDifficulty = difficultyIndex;
-        enemy.board.PopulateBoard(player.ChooseShips(configurationIndex), Convert.ToInt32(boardVerticalSize), Convert.ToInt32(boardHorizontalSize));
-        player.board.PopulateBoard(player.ChooseShips(configurationIndex), Convert.ToInt32(boardVerticalSize), Convert.ToInt32(boardHorizontalSize));
+        enemy.board.PopulateBoard(player.ChooseShips(configurationIndex), Convert.ToInt32(boardVerticalSize) + 2, Convert.ToInt32(boardHorizontalSize) + 2);
+        player.board.PopulateBoard(player.ChooseShips(configurationIndex), Convert.ToInt32(boardVerticalSize) + 2, Convert.ToInt32(boardHorizontalSize) + 2);
         enemy.PlayerBoardGrid = player.board.GeneratedBoard;
         lastHorizontalGridPos = player.board.LastHorizontalGridPos;
         lastVerticalGridPos = player.board.LastVerticalGridPos;
-        PrintPlayerGrid(lastHorizontalGridPos,lastVerticalGridPos, player.board.GeneratedBoard);
-        PrintEnemyGrid(lastHorizontalGridPos, lastVerticalGridPos, enemy.board.GeneratedBoard);
+        RefreshBoard();
+    }
+
+    public void RefreshBoard(int whichBoard = 0)
+    {
+        if(whichBoard == 1)
+        {
+            PrintPlayerGrid(lastHorizontalGridPos, lastVerticalGridPos, player.board.GeneratedBoard);
+            ShowTurn();
+        }
+        if(whichBoard == 2)
+        {
+            PrintEnemyGrid(lastHorizontalGridPos, lastVerticalGridPos, enemy.board.GeneratedBoard);
+            ShowTurn();
+        }
+        else
+        {
+            PrintPlayerGrid(lastHorizontalGridPos, lastVerticalGridPos, player.board.GeneratedBoard);
+            PrintEnemyGrid(lastHorizontalGridPos, lastVerticalGridPos, enemy.board.GeneratedBoard);
+            ShowTurn();
+        }
+        
+    }
+
+    public void ShowTurn()
+    {
+        turnCounterText.text = "Turn: " + turnCount;
     }
 }

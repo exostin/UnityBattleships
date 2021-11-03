@@ -22,6 +22,7 @@ public class Board
         // Calculate the lowest possible number of ships that can be placed on the board without overlapping
         // Board surface / area the ship takes being near wall or another ship
         var shipsTotalToPlace = ((vertical - 2) * (horizontal - 2)) / 6;
+        if (shipsTotalToPlace < 1) { shipsTotalToPlace = 1; }
 
         // Loop generating x ships in random locations which cannot overlap or be next to eachother
         for (int i = 0; i < shipsTotalToPlace;)
