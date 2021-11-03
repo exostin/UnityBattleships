@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
@@ -14,9 +15,11 @@ public class GameManager : MonoBehaviour
     public Sprite[] spriteList;
 
     public GameObject boardElement;
-    public GameObject boardElementsParent;
+    public GameObject playerBoardParent;
+    public GameObject enemyBoardParent;
 
     public int turnCount = 1;
+    public int screenHalf;
     public string boardVerticalSize { get; set; }
     public string boardHorizontalSize { get; set; }
 
@@ -26,53 +29,57 @@ public class GameManager : MonoBehaviour
     public int playerVerticalAttackCoord { get; set; }
     public int playerHorizontalAttackCoord { get; set; }
 
+    public int lastHorizontalGridPos { get; set; }
+    public int lastVerticalGridPos { get; set; }
 
-    public static void PrintPlayerGrid(int lastHorizontalGridPos, int lastVerticalGridPos, int[,] playerGrid)
+    void Start()
+    {
+        screenHalf = Screen.width / 2;
+        //while (true)
+        //{
+        //    Pass turnCount value to the turn counter
+        //    Print the player.board.GeneratedBoard
+        //    Print the enemy.board.GeneratedBoard
+
+        //    Get player attack coordinates and assign values accordingly
+        //    Attack by invoking Attack();
+        //turnCount++;
+        //}
+    } 
+    public void PrintPlayerGrid(int lastHorizontalGridPos, int lastVerticalGridPos, int[,] playerGrid)
     {
         for (int i = 1; i < lastHorizontalGridPos; i++)
         {
-            if (i >= 10)
-            {
-                Console.Write($"{i} ");
-            }
-            else
-            {
-                Console.Write($"{i}  ");
-            }
-
             for (int j = 1; j < lastVerticalGridPos; j++)
             {
-                Console.Write(string.Format("{0} ", playerGrid[i, j]));
+                GameObject boardElementClone = Instantiate(boardElement, new Vector2(j*60, i*60), Quaternion.identity, playerBoardParent.transform);
+
+                boardElementClone.GetComponent<Image>().sprite = spriteList[playerGrid[i, j]];
+
+                //GameObject boardElementClone = Instantiate(boardElement);
+                //boardElementClone.transform.position = new Vector2(i, j);
+                //boardElementClone.GetComponent<SpriteRenderer>().sprite = spriteList[playerGrid[i, j]];
             }
-            Console.Write(Environment.NewLine);
         }
     }
 
-    public static void PrintEnemyGrid(int lastHorizontalGridPos, int lastVerticalGridPos, int[,] enemyGrid)
+    public void PrintEnemyGrid(int lastHorizontalGridPos, int lastVerticalGridPos, int[,] enemyGrid)
     {
         for (int i = 1; i < lastHorizontalGridPos; i++)
         {
-            if (i >= 10)
-            {
-                Console.Write($"{i} ");
-            }
-            else
-            {
-                Console.Write($"{i}  ");
-            }
-
             for (int j = 1; j < lastVerticalGridPos; j++)
             {
+                GameObject boardElementCloneEnemy = Instantiate(boardElement, new Vector2(screenHalf + (j * 60), i * 60), Quaternion.identity, enemyBoardParent.transform);
+
                 if (enemyGrid[i, j] != 1)
                 {
-                    Console.Write(string.Format("{0} ", enemyGrid[i, j]));
+                    boardElementCloneEnemy.GetComponent<Image>().sprite = spriteList[enemyGrid[i, j]];
                 }
                 else
                 {
-                    Console.Write("0 ");
+                    boardElementCloneEnemy.GetComponent<Image>().sprite = spriteList[0];
                 }
             }
-            Console.Write(Environment.NewLine);
         }
     }
 
@@ -119,28 +126,9 @@ public class GameManager : MonoBehaviour
         enemy.board.PopulateBoard(player.ChooseShips(configurationIndex), Convert.ToInt32(boardVerticalSize), Convert.ToInt32(boardHorizontalSize));
         player.board.PopulateBoard(player.ChooseShips(configurationIndex), Convert.ToInt32(boardVerticalSize), Convert.ToInt32(boardHorizontalSize));
         enemy.PlayerBoardGrid = player.board.GeneratedBoard;
-    }
-
-    void Start()
-    {
-        // Set the configurationIndex through UI
-        // Set the difficultyIndex through UI
-        // Set the boardVerticalSize and boardHorizontalSize through UI
-
-        // Check for the input bounds inside Unity
-        //(configurationIndex >= 1 && configurationIndex <= 5)
-        //&& (difficultyIndex >= 1 && difficultyIndex <= 4)
-        //boardVerticalSize <= 26 + 2 && boardHorizontalSize <= 26 + 2 && boardVerticalSize >= 3 + 2 && boardHorizontalSize >= 3 + 2
-
-        //while (true)
-        //{
-        //    Pass turnCount value to the turn counter
-        //    Print the player.board.GeneratedBoard
-        //    Print the enemy.board.GeneratedBoard
-
-        //    Get player attack coordinates and assign values accordingly
-        //    Attack by invoking Attack();
-        //turnCount++;
-        //}
+        lastHorizontalGridPos = player.board.LastHorizontalGridPos;
+        lastVerticalGridPos = player.board.LastVerticalGridPos;
+        PrintPlayerGrid(lastHorizontalGridPos,lastVerticalGridPos, player.board.GeneratedBoard);
+        PrintEnemyGrid(lastHorizontalGridPos, lastVerticalGridPos, enemy.board.GeneratedBoard);
     }
 }
