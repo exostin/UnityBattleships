@@ -8,8 +8,8 @@ using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
-    Player player = new Player();
-    Enemy enemy = new Enemy();
+    public Player player = new Player();
+    public Enemy enemy = new Enemy();
 
     /// <summary>
     /// 0 - empty, 1 - ship, 2 - miss, 3 - hit
@@ -70,6 +70,9 @@ public class GameManager : MonoBehaviour
             for (int j = 1; j < lastVerticalGridPos; j++)
             {
                 GameObject enemyShip = Instantiate(enemyShipPrefab, new Vector2(screenHalf + (i * 60), screenMaxHeight + (-j * 60)), Quaternion.identity, enemyBoardParent.transform);
+                //Or this instead:
+                //GameObject enemyShip = Instantiate(enemyShipPrefab, enemyBoardParent.transform, false);
+                //enemyShip.transform.position = new Vector2(screenHalf + (i * 60), screenMaxHeight + (-j * 60));
                 enemyShip.GetComponent<Ship>().HorCoord = i;
                 enemyShip.GetComponent<Ship>().VertCoord = j;
                 if (enemyGrid[j, i] != 1)
@@ -90,6 +93,12 @@ public class GameManager : MonoBehaviour
     /// <param name="playerTurn">If true, then the attack is made on the enemy board</param>
     public void Attack()
     {
+        player.board.LaunchAttack(enemy.Attack()[0], enemy.Attack()[1]);
+        RefreshBoard(2);
+        if (player.board.CheckIfDefeated())
+        {
+            SceneManager.LoadScene(0);
+        }
         enemy.board.LaunchAttack(playerVerticalAttackCoord, playerHorizontalAttackCoord);
         RefreshBoard(1);
         if (enemy.board.CheckIfDefeated())
@@ -97,13 +106,6 @@ public class GameManager : MonoBehaviour
             SceneManager.LoadScene(0);
         }
 
-        player.board.LaunchAttack(enemy.Attack()[0], enemy.Attack()[1]);
-        RefreshBoard(2);
-        if (player.board.CheckIfDefeated())
-        {
-            SceneManager.LoadScene(0);
-        }
-        
         turnCount++;
     }
 

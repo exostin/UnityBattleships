@@ -16,8 +16,11 @@ public class Ship : MonoBehaviour
 
     public void Attack()
     {
-        gm.playerVerticalAttackCoord = VertCoord;
-        gm.playerHorizontalAttackCoord = HorCoord;
-        gm.Attack();
+        if (gm.enemy.board.GeneratedBoard[VertCoord,HorCoord] != 2 && gm.enemy.board.GeneratedBoard[VertCoord, HorCoord] != 3)
+        {
+            gm.playerVerticalAttackCoord = VertCoord;
+            gm.playerHorizontalAttackCoord = HorCoord;
+            gm.Attack();
+        }
     }
 }

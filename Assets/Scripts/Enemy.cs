@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-class Enemy : Player
+public class Enemy : Player
 {
     public int[,] PlayerBoardGrid { get; set; }
     public int CurrentDifficulty { get; set; } = 0;
@@ -84,11 +84,6 @@ class Enemy : Player
             GenerateStrategicCoordsWithUnpopulatedNeighbours();
         }
 
-    }
-
-    public void GetPlayerBoard(ref Board playerBoard)
-    {
-        PlayerBoardGrid = playerBoard.GeneratedBoard;
     }
 
     public void GenerateRandomCoordinates()
