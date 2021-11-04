@@ -17,7 +17,7 @@ public class Ship : MonoBehaviour
         {
             gm.playerVerticalAttackCoord = VertCoord;
             gm.playerHorizontalAttackCoord = HorCoord;
-            gm.Attack();
+            gm.MakeTurn();
         }
     }
 }

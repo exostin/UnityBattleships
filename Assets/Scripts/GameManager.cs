@@ -80,22 +80,20 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    /// <summary>
-    /// Fires an attack
-    /// </summary>
-    /// <param name="playerTurn">If true, then the attack is made on the enemy board</param>
-    public void Attack()
+    public void MakeTurn()
     {
         player.board.LaunchAttack(enemy.Attack()[0], enemy.Attack()[1]);
         RefreshBoard(2);
         if (player.board.CheckIfDefeated())
         {
+            Debug.Log("You lose!");
             SceneManager.LoadScene(0);
         }
         enemy.board.LaunchAttack(playerVerticalAttackCoord, playerHorizontalAttackCoord);
         RefreshBoard(1);
         if (enemy.board.CheckIfDefeated())
         {
+            Debug.Log("You win!");
             SceneManager.LoadScene(0);
         }
 
