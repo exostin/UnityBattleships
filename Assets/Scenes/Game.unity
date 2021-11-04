@@ -3521,8 +3521,6 @@ MonoBehaviour:
   enemyBoardParent: {fileID: 1798214314}
   turnCounterText: {fileID: 2075573017}
   turnCount: 1
-  screenHalf: 0
-  screenMaxHeight: 0
   configurationIndex: 1
 --- !u!4 &2077322958
 Transform:

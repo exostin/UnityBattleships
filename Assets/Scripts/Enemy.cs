@@ -13,19 +13,19 @@ public class Enemy : Player
     {
         switch (CurrentDifficulty)
         {
-            case 1:
+            case 0:
                 BabyAI();
                 break;
 
-            case 2:
+            case 1:
                 EasyAI();
                 break;
 
-            case 3:
+            case 2:
                 NormalAI();
                 break;
 
-            case 4:
+            case 3:
                 HardAI();
                 break;
 
@@ -42,13 +42,13 @@ public class Enemy : Player
     /// </summary>
     public void BabyAI()
     {
-        GenerateCoordsWhichHaventBeenUsed();
+        GenerateUnusedCoords();
         if (PlayerBoardGrid[VerticalCoord, HorizontalCoord] == 1)
         {
             var missCheck = Random.Range(1, 101);
             if (missCheck <= MissOnPurposeChance)
             {
-                GenerateCoordsWhichHaventBeenUsed();
+                GenerateUnusedCoords();
             }
         }
     }
@@ -58,7 +58,7 @@ public class Enemy : Player
     /// </summary>
     public void EasyAI()
     {
-        GenerateCoordsWhichHaventBeenUsed();
+        GenerateUnusedCoords();
     }
 
     /// <summary>
@@ -66,7 +66,7 @@ public class Enemy : Player
     /// </summary>
     public void NormalAI()
     {
-        GenerateStrategicCoordsWithUnpopulatedNeighbours();
+        GenerateUnusedCoordsWithUnpopulatedNeighbours();
     }
 
     /// <summary>
@@ -79,38 +79,31 @@ public class Enemy : Player
         var missCheck = Random.Range(1, 101);
         if (missCheck <= MissOnPurposeChance)
         {
-            GenerateStrategicCoordsWithUnpopulatedNeighbours();
+            GenerateUnusedCoordsWithUnpopulatedNeighbours();
         }
     }
 
-    public void GenerateRandomCoordinates()
+    public void GenerateUnusedCoords()
     {
-        VerticalCoord = Random.Range(board.FirstGridPos, board.LastVerticalGridPos);
-        HorizontalCoord = Random.Range(board.FirstGridPos, board.LastHorizontalGridPos);
-    }
-
-    public void GenerateCoordsWhichHaventBeenUsed()
-    {
-        GenerateRandomCoordinates();
         while (true)
         {
-            if (PlayerBoardGrid[VerticalCoord, HorizontalCoord] == 2 || PlayerBoardGrid[VerticalCoord, HorizontalCoord] == 3)
+            int _vert = Random.Range(board.FirstGridPos, board.LastVerticalGridPos);
+            int _hor = Random.Range(board.FirstGridPos, board.LastHorizontalGridPos);
+            if (PlayerBoardGrid[_vert, _hor] != 2 && PlayerBoardGrid[_vert, _hor] != 3)
             {
-                GenerateRandomCoordinates();
-            }
-            else
-            {
+                VerticalCoord = _vert;
+                HorizontalCoord = _hor;
                 break;
             }
         }
     }
 
-    public void GenerateStrategicCoordsWithUnpopulatedNeighbours()
+    public void GenerateUnusedCoordsWithUnpopulatedNeighbours()
     {
-        GenerateCoordsWhichHaventBeenUsed();
+        GenerateUnusedCoords();
         while (CheckIfThereAreNeighbours())
         {
-            GenerateCoordsWhichHaventBeenUsed();
+            GenerateUnusedCoords();
         }
     }
 
@@ -118,7 +111,7 @@ public class Enemy : Player
     {
         while (PlayerBoardGrid[VerticalCoord, HorizontalCoord] != 1)
         {
-            GenerateStrategicCoordsWithUnpopulatedNeighbours();
+            GenerateUnusedCoordsWithUnpopulatedNeighbours();
         }
     }
 
