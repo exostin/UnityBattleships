@@ -1,15 +1,13 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class Enemy : Player
 {
     public int[,] PlayerBoardGrid { get; set; }
     public int CurrentDifficulty { get; set; } = 0;
-    int VerticalCoord { get; set; }
-    int HorizontalCoord { get; set; }
-    int[] AttackCoords { get; set; }
-    int MissOnPurposeChance { get; set; } = 33;
+    private int VerticalCoord { get; set; }
+    private int HorizontalCoord { get; set; }
+    private int[] AttackCoords { get; set; }
+    private int MissOnPurposeChance { get; set; } = 33;
 
     public int[] Attack()
     {
@@ -83,7 +81,6 @@ public class Enemy : Player
         {
             GenerateStrategicCoordsWithUnpopulatedNeighbours();
         }
-
     }
 
     public void GenerateRandomCoordinates()
@@ -106,7 +103,6 @@ public class Enemy : Player
                 break;
             }
         }
-
     }
 
     public void GenerateStrategicCoordsWithUnpopulatedNeighbours()

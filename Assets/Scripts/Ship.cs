@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class Ship : MonoBehaviour
@@ -12,11 +10,10 @@ public class Ship : MonoBehaviour
     {
         gm = FindObjectOfType<GameManager>();
     }
-    
 
     public void Attack()
     {
-        if (gm.enemy.board.GeneratedBoard[VertCoord,HorCoord] != 2 && gm.enemy.board.GeneratedBoard[VertCoord, HorCoord] != 3)
+        if (gm.enemy.board.GeneratedBoard[VertCoord, HorCoord] != 2 && gm.enemy.board.GeneratedBoard[VertCoord, HorCoord] != 3)
         {
             gm.playerVerticalAttackCoord = VertCoord;
             gm.playerHorizontalAttackCoord = HorCoord;

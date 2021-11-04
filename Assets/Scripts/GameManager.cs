@@ -1,10 +1,8 @@
-using System.Collections;
-using System.Collections.Generic;
 using System;
-using UnityEngine;
-using UnityEngine.UI;
 using TMPro;
+using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
@@ -24,14 +22,14 @@ public class GameManager : MonoBehaviour
     public TextMeshProUGUI turnCounterText;
 
     public int turnCount = 1;
-    public int screenHalf;
-    public int screenMaxHeight;
+
     public bool IsPlayerTurn { get; set; } = true;
     public string boardVerticalSize { get; set; }
     public string boardHorizontalSize { get; set; }
 
     // Hardcoding the configuration index because it doesn't even mean anything yet
     public int configurationIndex = 1;
+
     public int difficultyIndex { get; set; }
     public int playerVerticalAttackCoord { get; set; }
     public int playerHorizontalAttackCoord { get; set; }
@@ -39,18 +37,13 @@ public class GameManager : MonoBehaviour
     public int lastHorizontalGridPos { get; set; }
     public int lastVerticalGridPos { get; set; }
 
-    void Start()
-    {
-        screenHalf = Screen.width / 2;
-        screenMaxHeight = Screen.height;
-    } 
     public void PrintPlayerGrid(int lastHorizontalGridPos, int lastVerticalGridPos, int[,] playerGrid)
     {
         for (int i = 1; i < lastHorizontalGridPos; i++)
         {
             for (int j = 1; j < lastVerticalGridPos; j++)
             {
-                GameObject playerShip = Instantiate(playerShipPrefab, new Vector2(i*60, screenMaxHeight+(-j*60)), Quaternion.identity, playerBoardParent.transform);
+                GameObject playerShip = Instantiate(playerShipPrefab, new Vector2(i * 60, Screen.height + (-j * 60)), Quaternion.identity, playerBoardParent.transform);
 
                 playerShip.GetComponent<Image>().sprite = spriteList[playerGrid[j, i]];
                 playerShip.GetComponent<Ship>().HorCoord = i;
@@ -69,7 +62,7 @@ public class GameManager : MonoBehaviour
         {
             for (int j = 1; j < lastVerticalGridPos; j++)
             {
-                GameObject enemyShip = Instantiate(enemyShipPrefab, new Vector2(screenHalf + (i * 60), screenMaxHeight + (-j * 60)), Quaternion.identity, enemyBoardParent.transform);
+                GameObject enemyShip = Instantiate(enemyShipPrefab, new Vector2((Screen.width / 2) + (i * 60), Screen.height + (-j * 60)), Quaternion.identity, enemyBoardParent.transform);
                 //Or this instead:
                 //GameObject enemyShip = Instantiate(enemyShipPrefab, enemyBoardParent.transform, false);
                 //enemyShip.transform.position = new Vector2(screenHalf + (i * 60), screenMaxHeight + (-j * 60));
@@ -122,23 +115,34 @@ public class GameManager : MonoBehaviour
 
     public void RefreshBoard(int whichBoard = 0)
     {
-        if(whichBoard == 1)
+        if (whichBoard == 1)
         {
+            ClearGrid(playerBoardParent);
             PrintPlayerGrid(lastHorizontalGridPos, lastVerticalGridPos, player.board.GeneratedBoard);
             ShowTurn();
         }
-        if(whichBoard == 2)
+        if (whichBoard == 2)
         {
+            ClearGrid(enemyBoardParent);
             PrintEnemyGrid(lastHorizontalGridPos, lastVerticalGridPos, enemy.board.GeneratedBoard);
             ShowTurn();
         }
         else
         {
+            ClearGrid(playerBoardParent);
+            ClearGrid(enemyBoardParent);
             PrintPlayerGrid(lastHorizontalGridPos, lastVerticalGridPos, player.board.GeneratedBoard);
             PrintEnemyGrid(lastHorizontalGridPos, lastVerticalGridPos, enemy.board.GeneratedBoard);
             ShowTurn();
         }
-        
+    }
+
+    private void ClearGrid(GameObject gridParent)
+    {
+        foreach (Transform child in gridParent.transform)
+        {
+            GameObject.Destroy(child.gameObject);
+        }
     }
 
     public void ShowTurn()
