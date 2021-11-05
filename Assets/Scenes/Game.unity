@@ -1445,7 +1445,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 2077322957}
         m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
-        m_MethodName: set_boardVerticalSize
+        m_MethodName: set_BoardVerticalSize
         m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -2016,7 +2016,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 2077322957}
         m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
-        m_MethodName: set_difficultyIndex
+        m_MethodName: set_DifficultyIndex
         m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -2619,7 +2619,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 2077322957}
         m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
-        m_MethodName: set_boardHorizontalSize
+        m_MethodName: set_BoardHorizontalSize
         m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -3520,8 +3520,6 @@ MonoBehaviour:
   playerBoardParent: {fileID: 481753636}
   enemyBoardParent: {fileID: 1798214314}
   turnCounterText: {fileID: 2075573017}
-  turnCount: 1
-  configurationIndex: 1
 --- !u!4 &2077322958
 Transform:
   m_ObjectHideFlags: 0
@@ -3645,7 +3643,7 @@ MonoBehaviour:
         m_CallState: 2
       - m_Target: {fileID: 2077322957}
         m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
-        m_MethodName: PlayGame
+        m_MethodName: PlayButton
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
