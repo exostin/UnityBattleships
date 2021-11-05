@@ -74,20 +74,39 @@ public class GameManager : MonoBehaviour
 
     public void MakeTurn()
     {
-        enemy.board.LaunchAttack(PlayerVerticalAttackCoord, PlayerHorizontalAttackCoord);
+        var _hitSuccess = enemy.board.LaunchAttack(PlayerVerticalAttackCoord, PlayerHorizontalAttackCoord);
         RefreshBoard(2);
         if (enemy.board.CheckIfDefeated())
         {
             Debug.Log("You win!");
             SceneManager.LoadScene(0);
+            return;
         }
-        int[] _enemyAttackCoords = enemy.DoAnAttack();
-        player.board.LaunchAttack(_enemyAttackCoords[0], _enemyAttackCoords[1]);
-        RefreshBoard(1);
-        if (player.board.CheckIfDefeated())
+        if (_hitSuccess)
         {
-            Debug.Log("You lose!");
-            SceneManager.LoadScene(0);
+            return;
+        }
+        DoEnemyMove();
+    }
+
+    private void DoEnemyMove()
+    {
+        while (true)
+        {
+            int[] _enemyAttackCoords = enemy.DoAnAttack();
+            var _hitSuccess = player.board.LaunchAttack(_enemyAttackCoords[0], _enemyAttackCoords[1]);
+            RefreshBoard(1);
+            if (player.board.CheckIfDefeated())
+            {
+                Debug.Log("You lose!");
+                SceneManager.LoadScene(0);
+                return;
+            }
+
+            if (!_hitSuccess)
+            {
+                break;
+            }
         }
 
         turnCount++;
