@@ -46,8 +46,8 @@ public class GameManager : MonoBehaviour
                 GameObject playerShip = Instantiate(playerShipPrefab, new Vector2(i * 60, Screen.height + (-j * 60)), Quaternion.identity, playerBoardParent.transform);
 
                 playerShip.GetComponent<Image>().sprite = spriteList[player.board.GeneratedBoard[j, i]];
-                playerShip.GetComponent<Ship>().HorCoord = i;
-                playerShip.GetComponent<Ship>().VertCoord = j;
+                playerShip.GetComponent<ShipFunctionality>().HorCoord = i;
+                playerShip.GetComponent<ShipFunctionality>().VertCoord = j;
             }
         }
     }
@@ -60,18 +60,18 @@ public class GameManager : MonoBehaviour
             for (int j = 1; j < LastVerticalGridPos; j++)
             {
                 GameObject enemyShip = Instantiate(enemyShipPrefab, new Vector2((Screen.width / 2) + (i * 60), Screen.height + (-j * 60)), Quaternion.identity, enemyBoardParent.transform);
-                enemyShip.GetComponent<Ship>().HorCoord = i;
-                enemyShip.GetComponent<Ship>().VertCoord = j;
+                enemyShip.GetComponent<ShipFunctionality>().HorCoord = i;
+                enemyShip.GetComponent<ShipFunctionality>().VertCoord = j;
 
                 // ------------ NOT WORKING CORRECTLY
-                enemyShip.GetComponent<Ship>().OriginalValue = enemy.board.GeneratedBoard[j, i];
-                if (enemy.board.GeneratedBoard[j, i] == 4)
+                enemyShip.GetComponent<ShipFunctionality>().OriginalValue = enemy.board.GeneratedBoard[j, i];
+                if (enemy.board.GeneratedBoard[j, i] == (int)BoardFieldType.Flag)
                 {
-                    enemyShip.GetComponent<Ship>().FlagActive = true;
+                    enemyShip.GetComponent<ShipFunctionality>().FlagActive = true;
                 }
                 // ------------ NOT WORKING CORRECTLY
 
-                if (enemy.board.GeneratedBoard[j, i] != 1)
+                if (enemy.board.GeneratedBoard[j, i] != (int)BoardFieldType.Ship)
                 {
                     enemyShip.GetComponent<Image>().sprite = spriteList[enemy.board.GeneratedBoard[j, i]];
                 }

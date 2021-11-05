@@ -43,7 +43,7 @@ public class Enemy : Player
     public void BabyAI()
     {
         GenerateUnusedCoords();
-        if (PlayerBoardGrid[VerticalCoord, HorizontalCoord] == 1)
+        if (PlayerBoardGrid[VerticalCoord, HorizontalCoord] == (int)BoardFieldType.Ship)
         {
             var missCheck = Random.Range(1, 101);
             if (missCheck <= MissOnPurposeChance)
@@ -89,7 +89,7 @@ public class Enemy : Player
         {
             int _vert = Random.Range(board.FirstGridPos, board.LastVerticalGridPos);
             int _hor = Random.Range(board.FirstGridPos, board.LastHorizontalGridPos);
-            if (PlayerBoardGrid[_vert, _hor] != 2 && PlayerBoardGrid[_vert, _hor] != 3)
+            if (PlayerBoardGrid[_vert, _hor] != (int)BoardFieldType.Miss && PlayerBoardGrid[_vert, _hor] != (int)BoardFieldType.Hit)
             {
                 VerticalCoord = _vert;
                 HorizontalCoord = _hor;
@@ -109,7 +109,7 @@ public class Enemy : Player
 
     public void GeneratePopulatedCoords()
     {
-        while (PlayerBoardGrid[VerticalCoord, HorizontalCoord] != 1)
+        while (PlayerBoardGrid[VerticalCoord, HorizontalCoord] != (int)BoardFieldType.Ship)
         {
             GenerateUnusedCoordsWithUnpopulatedNeighbours();
         }
@@ -117,14 +117,14 @@ public class Enemy : Player
 
     public bool CheckIfThereAreNeighbours()
     {
-        if ((PlayerBoardGrid[VerticalCoord + 1, HorizontalCoord] != 3) &&
-            (PlayerBoardGrid[VerticalCoord - 1, HorizontalCoord] != 3) &&
-            (PlayerBoardGrid[VerticalCoord, HorizontalCoord + 1] != 3) &&
-            (PlayerBoardGrid[VerticalCoord, HorizontalCoord - 1] != 3) &&
-            (PlayerBoardGrid[VerticalCoord - 1, HorizontalCoord + 1] != 3) &&
-            (PlayerBoardGrid[VerticalCoord - 1, HorizontalCoord - 1] != 3) &&
-            (PlayerBoardGrid[VerticalCoord + 1, HorizontalCoord + 1] != 3) &&
-            (PlayerBoardGrid[VerticalCoord + 1, HorizontalCoord - 1] != 3))
+        if ((PlayerBoardGrid[VerticalCoord + 1, HorizontalCoord] != (int)BoardFieldType.Hit) &&
+            (PlayerBoardGrid[VerticalCoord - 1, HorizontalCoord] != (int)BoardFieldType.Hit) &&
+            (PlayerBoardGrid[VerticalCoord, HorizontalCoord + 1] != (int)BoardFieldType.Hit) &&
+            (PlayerBoardGrid[VerticalCoord, HorizontalCoord - 1] != (int)BoardFieldType.Hit) &&
+            (PlayerBoardGrid[VerticalCoord - 1, HorizontalCoord + 1] != (int)BoardFieldType.Hit) &&
+            (PlayerBoardGrid[VerticalCoord - 1, HorizontalCoord - 1] != (int)BoardFieldType.Hit) &&
+            (PlayerBoardGrid[VerticalCoord + 1, HorizontalCoord + 1] != (int)BoardFieldType.Hit) &&
+            (PlayerBoardGrid[VerticalCoord + 1, HorizontalCoord - 1] != (int)BoardFieldType.Hit))
         {
             return false;
         }

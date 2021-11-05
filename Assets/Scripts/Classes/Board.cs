@@ -31,7 +31,7 @@ public class Board
                 var randomHorizontalStartPoint = Random.Range(FirstGridPos, LastHorizontalGridPos);
                 if (!CheckIfTheresShipNearby(randomVerticalStartPoint, randomHorizontalStartPoint))
                 {
-                    GeneratedBoard[randomVerticalStartPoint, randomHorizontalStartPoint] = 1;
+                    GeneratedBoard[randomVerticalStartPoint, randomHorizontalStartPoint] = (int)BoardFieldType.Ship;
                     i++;
                     break;
                 }
@@ -60,15 +60,15 @@ public class Board
     /// <returns>true if there is a ship nearby, false if there are none</returns>
     public bool CheckIfTheresShipNearby(int vertical, int horizontal)
     {
-        if (GeneratedBoard[vertical, horizontal] == 0 &&
-            (GeneratedBoard[vertical + 1, horizontal] != 1) &&
-            (GeneratedBoard[vertical - 1, horizontal] != 1) &&
-            (GeneratedBoard[vertical, horizontal + 1] != 1) &&
-            (GeneratedBoard[vertical, horizontal - 1] != 1) &&
-            (GeneratedBoard[vertical - 1, horizontal + 1] != 1) &&
-            (GeneratedBoard[vertical - 1, horizontal - 1] != 1) &&
-            (GeneratedBoard[vertical + 1, horizontal + 1] != 1) &&
-            (GeneratedBoard[vertical + 1, horizontal - 1] != 1))
+        if (GeneratedBoard[vertical, horizontal] == (int)BoardFieldType.Empty &&
+            (GeneratedBoard[vertical + 1, horizontal] != (int)BoardFieldType.Ship) &&
+            (GeneratedBoard[vertical - 1, horizontal] != (int)BoardFieldType.Ship) &&
+            (GeneratedBoard[vertical, horizontal + 1] != (int)BoardFieldType.Ship) &&
+            (GeneratedBoard[vertical, horizontal - 1] != (int)BoardFieldType.Ship) &&
+            (GeneratedBoard[vertical - 1, horizontal + 1] != (int)BoardFieldType.Ship) &&
+            (GeneratedBoard[vertical - 1, horizontal - 1] != (int)BoardFieldType.Ship) &&
+            (GeneratedBoard[vertical + 1, horizontal + 1] != (int)BoardFieldType.Ship) &&
+            (GeneratedBoard[vertical + 1, horizontal - 1] != (int)BoardFieldType.Ship))
         {
             return false;
         }
@@ -87,16 +87,16 @@ public class Board
     /// <returns>true if something was hit, false if it was a miss</returns>
     public bool LaunchAttack(int verticalCoordinate, int horizontalCoordinate)
     {
-        if (GeneratedBoard[verticalCoordinate, horizontalCoordinate] == 1)
+        if (GeneratedBoard[verticalCoordinate, horizontalCoordinate] == (int)BoardFieldType.Ship)
         {
             // Mark that spot as hit
-            GeneratedBoard[verticalCoordinate, horizontalCoordinate] = 3;
+            GeneratedBoard[verticalCoordinate, horizontalCoordinate] = (int)BoardFieldType.Hit;
             return true;
         }
         else
         {
             // Mark that spot as a miss
-            GeneratedBoard[verticalCoordinate, horizontalCoordinate] = 2;
+            GeneratedBoard[verticalCoordinate, horizontalCoordinate] = (int)BoardFieldType.Miss;
             return false;
         }
     }
@@ -106,7 +106,7 @@ public class Board
     /// </summary>
     public bool CheckIfDefeated()
     {
-        if (!GeneratedBoard.Cast<int>().Contains(1))
+        if (!GeneratedBoard.Cast<int>().Contains((int)BoardFieldType.Ship))
         {
             return true;
         }

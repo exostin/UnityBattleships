@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-public class Ship : MonoBehaviour, IPointerClickHandler
+public class ShipFunctionality : MonoBehaviour, IPointerClickHandler
 {
     private GameManager gm;
     public int OriginalValue { get; set; }
@@ -16,7 +16,7 @@ public class Ship : MonoBehaviour, IPointerClickHandler
 
     public void SelectAttackCoordsByPlayer()
     {
-        if (gm.enemy.board.GeneratedBoard[VertCoord, HorCoord] != 2 && gm.enemy.board.GeneratedBoard[VertCoord, HorCoord] != 3)
+        if (gm.enemy.board.GeneratedBoard[VertCoord, HorCoord] != (int)BoardFieldType.Miss && gm.enemy.board.GeneratedBoard[VertCoord, HorCoord] != (int)BoardFieldType.Hit)
         {
             gm.PlayerVerticalAttackCoord = VertCoord;
             gm.PlayerHorizontalAttackCoord = HorCoord;
@@ -36,7 +36,7 @@ public class Ship : MonoBehaviour, IPointerClickHandler
     {
         if (!FlagActive)
         {
-            gm.enemy.board.GeneratedBoard[VertCoord, HorCoord] = 4;
+            gm.enemy.board.GeneratedBoard[VertCoord, HorCoord] = (int)BoardFieldType.Flag;
         }
         else
         {
