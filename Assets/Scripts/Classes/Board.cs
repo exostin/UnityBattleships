@@ -8,6 +8,11 @@ public class Board
     public int LastHorizontalGridPos { get; set; }
     public int[,] GeneratedBoard { get; set; }
 
+    public Board()
+    {
+        GeneratedBoard = new int[12, 12];
+    }
+
     /// <summary>
     /// Populate a board with a defined number of ships of specified type
     /// </summary>
