@@ -11,12 +11,12 @@ public class Ship : MonoBehaviour
         gm = FindObjectOfType<GameManager>();
     }
 
-    public void Attack()
+    public void SelectAttackCoordsByPlayer()
     {
         if (gm.enemy.board.GeneratedBoard[VertCoord, HorCoord] != 2 && gm.enemy.board.GeneratedBoard[VertCoord, HorCoord] != 3)
         {
-            gm.playerVerticalAttackCoord = VertCoord;
-            gm.playerHorizontalAttackCoord = HorCoord;
+            gm.PlayerVerticalAttackCoord = VertCoord;
+            gm.PlayerHorizontalAttackCoord = HorCoord;
             gm.MakeTurn();
         }
     }

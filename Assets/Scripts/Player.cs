@@ -2,7 +2,7 @@ public class Player
 {
     public Board board = new Board();
 
-    public int[] ChooseShips(int configurationIndex)
+    public int[] ChooseShipsConfiguration(int configurationIndex)
     {
         switch (configurationIndex)
         {

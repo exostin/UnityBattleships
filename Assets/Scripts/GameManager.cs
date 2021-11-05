@@ -21,26 +21,26 @@ public class GameManager : MonoBehaviour
 
     public TextMeshProUGUI turnCounterText;
 
-    public int turnCount = 1;
+    private int turnCount = 1;
 
-    public string boardVerticalSize { get; set; }
-    public string boardHorizontalSize { get; set; }
+    public string BoardVerticalSize { get; set; }
+    public string BoardHorizontalSize { get; set; }
 
     // Hardcoding the configuration index because it doesn't even mean anything yet
-    public int configurationIndex = 1;
+    private int configurationIndex = 1;
 
-    public int difficultyIndex { get; set; }
-    public int playerVerticalAttackCoord { get; set; }
-    public int playerHorizontalAttackCoord { get; set; }
+    public int DifficultyIndex { get; set; }
+    public int PlayerVerticalAttackCoord { get; set; }
+    public int PlayerHorizontalAttackCoord { get; set; }
 
-    public int lastHorizontalGridPos { get; set; }
-    public int lastVerticalGridPos { get; set; }
+    public int LastHorizontalGridPos { get; set; }
+    public int LastVerticalGridPos { get; set; }
 
     public void PrintPlayerGrid()
     {
-        for (int i = 1; i < lastHorizontalGridPos; i++)
+        for (int i = 1; i < LastHorizontalGridPos; i++)
         {
-            for (int j = 1; j < lastVerticalGridPos; j++)
+            for (int j = 1; j < LastVerticalGridPos; j++)
             {
                 GameObject playerShip = Instantiate(playerShipPrefab, new Vector2(i * 60, Screen.height + (-j * 60)), Quaternion.identity, playerBoardParent.transform);
 
@@ -53,9 +53,9 @@ public class GameManager : MonoBehaviour
 
     public void PrintEnemyGrid()
     {
-        for (int i = 1; i < lastHorizontalGridPos; i++)
+        for (int i = 1; i < LastHorizontalGridPos; i++)
         {
-            for (int j = 1; j < lastVerticalGridPos; j++)
+            for (int j = 1; j < LastVerticalGridPos; j++)
             {
                 GameObject enemyShip = Instantiate(enemyShipPrefab, new Vector2((Screen.width / 2) + (i * 60), Screen.height + (-j * 60)), Quaternion.identity, enemyBoardParent.transform);
                 enemyShip.GetComponent<Ship>().HorCoord = i;
@@ -74,14 +74,15 @@ public class GameManager : MonoBehaviour
 
     public void MakeTurn()
     {
-        enemy.board.LaunchAttack(playerVerticalAttackCoord, playerHorizontalAttackCoord);
+        enemy.board.LaunchAttack(PlayerVerticalAttackCoord, PlayerHorizontalAttackCoord);
         RefreshBoard(2);
         if (enemy.board.CheckIfDefeated())
         {
             Debug.Log("You win!");
             SceneManager.LoadScene(0);
         }
-        player.board.LaunchAttack(enemy.Attack()[0], enemy.Attack()[1]);
+        int[] _enemyAttackCoords = enemy.DoAnAttack();
+        player.board.LaunchAttack(_enemyAttackCoords[0], _enemyAttackCoords[1]);
         RefreshBoard(1);
         if (player.board.CheckIfDefeated())
         {
@@ -92,13 +93,13 @@ public class GameManager : MonoBehaviour
         turnCount++;
     }
 
-    public void PlayGame()
+    public void PlayButton()
     {
-        enemy.CurrentDifficulty = difficultyIndex;
-        enemy.board.PopulateBoard(player.ChooseShips(configurationIndex), Convert.ToInt32(boardVerticalSize) + 2, Convert.ToInt32(boardHorizontalSize) + 2);
-        player.board.PopulateBoard(player.ChooseShips(configurationIndex), Convert.ToInt32(boardVerticalSize) + 2, Convert.ToInt32(boardHorizontalSize) + 2);
-        lastHorizontalGridPos = player.board.LastHorizontalGridPos;
-        lastVerticalGridPos = player.board.LastVerticalGridPos;
+        enemy.CurrentDifficulty = DifficultyIndex;
+        enemy.board.PopulateBoard(player.ChooseShipsConfiguration(configurationIndex), Convert.ToInt32(BoardVerticalSize) + 2, Convert.ToInt32(BoardHorizontalSize) + 2);
+        player.board.PopulateBoard(player.ChooseShipsConfiguration(configurationIndex), Convert.ToInt32(BoardVerticalSize) + 2, Convert.ToInt32(BoardHorizontalSize) + 2);
+        LastHorizontalGridPos = player.board.LastHorizontalGridPos;
+        LastVerticalGridPos = player.board.LastVerticalGridPos;
         enemy.PlayerBoardGrid = player.board.GeneratedBoard;
         RefreshBoard();
     }
@@ -108,27 +109,27 @@ public class GameManager : MonoBehaviour
     {
         if (whichBoard == 1)
         {
-            ClearGrid(playerBoardParent);
+            ClearBoard(playerBoardParent);
             PrintPlayerGrid();
             ShowTurn();
         }
         if (whichBoard == 2)
         {
-            ClearGrid(enemyBoardParent);
+            ClearBoard(enemyBoardParent);
             PrintEnemyGrid();
             ShowTurn();
         }
         else
         {
-            ClearGrid(playerBoardParent);
-            ClearGrid(enemyBoardParent);
+            ClearBoard(playerBoardParent);
+            ClearBoard(enemyBoardParent);
             PrintPlayerGrid();
             PrintEnemyGrid();
             ShowTurn();
         }
     }
 
-    private void ClearGrid(GameObject gridParent)
+    private void ClearBoard(GameObject gridParent)
     {
         foreach (Transform child in gridParent.transform)
         {

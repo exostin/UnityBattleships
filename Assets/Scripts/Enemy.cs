@@ -9,7 +9,7 @@ public class Enemy : Player
     private int[] AttackCoords { get; set; }
     private int MissOnPurposeChance { get; set; } = 33;
 
-    public int[] Attack()
+    public int[] DoAnAttack()
     {
         switch (CurrentDifficulty)
         {
