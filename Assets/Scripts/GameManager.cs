@@ -38,6 +38,7 @@ public class GameManager : MonoBehaviour
 
     public void PrintPlayerGrid()
     {
+        ClearBoard(playerBoardParent);
         for (int i = 1; i < LastHorizontalGridPos; i++)
         {
             for (int j = 1; j < LastVerticalGridPos; j++)
@@ -53,6 +54,7 @@ public class GameManager : MonoBehaviour
 
     public void PrintEnemyGrid()
     {
+        ClearBoard(enemyBoardParent);
         for (int i = 1; i < LastHorizontalGridPos; i++)
         {
             for (int j = 1; j < LastVerticalGridPos; j++)
@@ -60,6 +62,15 @@ public class GameManager : MonoBehaviour
                 GameObject enemyShip = Instantiate(enemyShipPrefab, new Vector2((Screen.width / 2) + (i * 60), Screen.height + (-j * 60)), Quaternion.identity, enemyBoardParent.transform);
                 enemyShip.GetComponent<Ship>().HorCoord = i;
                 enemyShip.GetComponent<Ship>().VertCoord = j;
+
+                // ------------ NOT WORKING CORRECTLY
+                enemyShip.GetComponent<Ship>().OriginalValue = enemy.board.GeneratedBoard[j, i];
+                if (enemy.board.GeneratedBoard[j, i] == 4)
+                {
+                    enemyShip.GetComponent<Ship>().FlagActive = true;
+                }
+                // ------------ NOT WORKING CORRECTLY
+
                 if (enemy.board.GeneratedBoard[j, i] != 1)
                 {
                     enemyShip.GetComponent<Image>().sprite = spriteList[enemy.board.GeneratedBoard[j, i]];
@@ -128,20 +139,16 @@ public class GameManager : MonoBehaviour
     {
         if (whichBoard == 1)
         {
-            ClearBoard(playerBoardParent);
             PrintPlayerGrid();
             ShowTurn();
         }
         if (whichBoard == 2)
         {
-            ClearBoard(enemyBoardParent);
             PrintEnemyGrid();
             ShowTurn();
         }
         else
         {
-            ClearBoard(playerBoardParent);
-            ClearBoard(enemyBoardParent);
             PrintPlayerGrid();
             PrintEnemyGrid();
             ShowTurn();

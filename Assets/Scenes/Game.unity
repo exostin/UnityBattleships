@@ -1626,7 +1626,7 @@ RectTransform:
   - {fileID: 1865509247}
   - {fileID: 2121962745}
   m_Father: {fileID: 0}
-  m_RootOrder: 2
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -2915,7 +2915,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 3
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1594286469
 GameObject:
@@ -3797,6 +3797,7 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 8875c4a2e4ae4e747a7fe1fd8153040c, type: 3}
   - {fileID: 21300000, guid: 6da56dd4440148c44bf55e5645717700, type: 3}
   - {fileID: 21300000, guid: df6b430feb00a144eb7a81234b8d43f0, type: 3}
+  - {fileID: 21300000, guid: 9a485af211cfee94182f827c6f8c0f86, type: 3}
   enemyShipPrefab: {fileID: 3455212372282679094, guid: 580a16021669cc740863093fa3b5d5f9, type: 3}
   playerShipPrefab: {fileID: 3455212372282679094, guid: a54b36c551ce26140a81f042af7f441a, type: 3}
   playerBoardParent: {fileID: 481753636}

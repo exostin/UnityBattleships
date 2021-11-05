@@ -26,7 +26,7 @@ public class Enemy : Player
                 break;
 
             case 3:
-                HardAI();
+                ImpossibleAI();
                 break;
 
             default:
@@ -38,7 +38,7 @@ public class Enemy : Player
     }
 
     /// <summary>
-    /// This AI intelligence level will: has a small chance to purosefully reroll the coords if they would hit a ship
+    /// Has a small chance to purposefully reroll the coords if they would hit a ship
     /// </summary>
     public void BabyAI()
     {
@@ -54,7 +54,7 @@ public class Enemy : Player
     }
 
     /// <summary>
-    /// This AI intelligence level will simply attack positions that haven't been hit yet
+    /// Simply attack positions that haven't been hit yet
     /// </summary>
     public void EasyAI()
     {
@@ -62,7 +62,7 @@ public class Enemy : Player
     }
 
     /// <summary>
-    /// This AI intelligence level will: attack positions that aren't near to other already hit positions
+    /// Attack positions that aren't near to other already hit positions
     /// </summary>
     public void NormalAI()
     {
@@ -70,9 +70,9 @@ public class Enemy : Player
     }
 
     /// <summary>
-    /// This AI intelligence level will: generate a guaranteed hit coordinates and have a small chance to generate new ones that don't
+    /// Generate a guaranteed hit coordinates and have a small chance to reroll it
     /// </summary>
-    public void HardAI()
+    public void ImpossibleAI()
     {
         GeneratePopulatedCoords();
 

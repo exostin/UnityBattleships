@@ -78,7 +78,7 @@ public class Board
         }
     }
 
-    // 0 - empty space, 1 - a ship, 2 - miss, 3 - hit
+    // 0 - empty space, 1 - a ship, 2 - miss, 3 - hit, 4 - flag
     /// <summary>
     /// Launches an attack at the generated board
     /// </summary>
