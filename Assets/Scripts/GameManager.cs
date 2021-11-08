@@ -45,7 +45,7 @@ public class GameManager : MonoBehaviour
             {
                 GameObject playerShip = Instantiate(playerShipPrefab, new Vector2(i * 60, Screen.height + (-j * 60)), Quaternion.identity, playerBoardParent.transform);
 
-                playerShip.GetComponent<Image>().sprite = spriteList[player.board.GeneratedBoard[j, i]];
+                playerShip.GetComponent<Image>().sprite = spriteList[player.board.BoardFields[j, i].Type];
                 playerShip.GetComponent<ShipFunctionality>().HorCoord = i;
                 playerShip.GetComponent<ShipFunctionality>().VertCoord = j;
             }
@@ -64,16 +64,16 @@ public class GameManager : MonoBehaviour
                 enemyShip.GetComponent<ShipFunctionality>().VertCoord = j;
 
                 // ------------ NOT WORKING CORRECTLY
-                enemyShip.GetComponent<ShipFunctionality>().OriginalValue = enemy.board.GeneratedBoard[j, i];
-                if (enemy.board.GeneratedBoard[j, i] == (int)BoardFieldType.PlayerFlag)
+                enemyShip.GetComponent<ShipFunctionality>().OriginalValue = enemy.board.BoardFields[j, i].Type;
+                if (enemy.board.BoardFields[j, i].Type == (int)BoardFieldType.PlayerFlag)
                 {
                     enemyShip.GetComponent<ShipFunctionality>().FlagActive = true;
                 }
                 // ------------ NOT WORKING CORRECTLY
 
-                if (enemy.board.GeneratedBoard[j, i] != (int)BoardFieldType.Ship)
+                if (enemy.board.BoardFields[j, i].Type != (int)BoardFieldType.Ship)
                 {
-                    enemyShip.GetComponent<Image>().sprite = spriteList[enemy.board.GeneratedBoard[j, i]];
+                    enemyShip.GetComponent<Image>().sprite = spriteList[enemy.board.BoardFields[j, i].Type];
                 }
                 else
                 {
@@ -130,7 +130,7 @@ public class GameManager : MonoBehaviour
         player.board.PopulateBoard(player.ChooseShipsConfiguration(configurationIndex), Convert.ToInt32(BoardVerticalSize) + 2, Convert.ToInt32(BoardHorizontalSize) + 2);
         LastHorizontalGridPos = player.board.LastHorizontalGridPos;
         LastVerticalGridPos = player.board.LastVerticalGridPos;
-        enemy.PlayerBoardGrid = player.board.GeneratedBoard;
+        enemy.PlayerBoardGrid = player.board.BoardFields;
         RefreshBoard();
     }
 

@@ -6,11 +6,21 @@ public class Board
     public int FirstGridPos { get; set; } = 1;
     public int LastVerticalGridPos { get; set; }
     public int LastHorizontalGridPos { get; set; }
-    public int[,] GeneratedBoard { get; set; }
+    public Field[,] BoardFields { get; set; }
+
+    private const int defaultBoardVerticalSize = 12;
+    private const int defaultBoardHorizontalSize = 12;
 
     public Board()
     {
-        GeneratedBoard = new int[12, 12];
+        BoardFields = new Field[defaultBoardVerticalSize, defaultBoardHorizontalSize];
+        for (int i = 0; i < defaultBoardVerticalSize; i++)
+        {
+            for (int j = 0; j < defaultBoardHorizontalSize; j++)
+            {
+                BoardFields[i, j] = new Field((int)BoardFieldType.Empty, vert: i, hor: j);
+            }
+        }
     }
 
     /// <summary>
@@ -19,7 +29,7 @@ public class Board
     /// <param name="shipsConfiguration"> {5s, 4s, 3s, 2s, 1s} - how many of which ship to place</param>
     public void PopulateBoard(int[] shipsConfiguration, int vertical, int horizontal)
     {
-        GeneratedBoard = new int[vertical, horizontal];
+        BoardFields = new Field[vertical, horizontal];
         CheckDimensions();
 
         // Calculate the lowest possible number of ships that can be placed on the board without overlapping
@@ -36,7 +46,8 @@ public class Board
                 var randomHorizontalStartPoint = Random.Range(FirstGridPos, LastHorizontalGridPos);
                 if (!CheckIfTheresSpaceForShip(randomVerticalStartPoint, randomHorizontalStartPoint))
                 {
-                    GeneratedBoard[randomVerticalStartPoint, randomHorizontalStartPoint] = (int)BoardFieldType.Ship;
+                    BoardFields[randomVerticalStartPoint, randomHorizontalStartPoint] =
+                        new Field((int)BoardFieldType.Ship, randomVerticalStartPoint, randomHorizontalStartPoint);
                     i++;
                     break;
                 }
@@ -53,8 +64,8 @@ public class Board
     /// </summary>
     private void CheckDimensions()
     {
-        LastVerticalGridPos = GeneratedBoard.GetLength(0) - 1;
-        LastHorizontalGridPos = GeneratedBoard.GetLength(1) - 1;
+        LastVerticalGridPos = BoardFields.GetLength(0) - 1;
+        LastHorizontalGridPos = BoardFields.GetLength(1) - 1;
     }
 
     /// <summary>
@@ -65,15 +76,15 @@ public class Board
     /// <returns>true if there is a ship nearby, false if there are none</returns>
     public bool CheckIfTheresSpaceForShip(int vertical, int horizontal)
     {
-        if (GeneratedBoard[vertical, horizontal] == (int)BoardFieldType.Empty &&
-            (GeneratedBoard[vertical + 1, horizontal] != (int)BoardFieldType.Ship) &&
-            (GeneratedBoard[vertical - 1, horizontal] != (int)BoardFieldType.Ship) &&
-            (GeneratedBoard[vertical, horizontal + 1] != (int)BoardFieldType.Ship) &&
-            (GeneratedBoard[vertical, horizontal - 1] != (int)BoardFieldType.Ship) &&
-            (GeneratedBoard[vertical - 1, horizontal + 1] != (int)BoardFieldType.Ship) &&
-            (GeneratedBoard[vertical - 1, horizontal - 1] != (int)BoardFieldType.Ship) &&
-            (GeneratedBoard[vertical + 1, horizontal + 1] != (int)BoardFieldType.Ship) &&
-            (GeneratedBoard[vertical + 1, horizontal - 1] != (int)BoardFieldType.Ship))
+        if (BoardFields[vertical, horizontal] == (int)BoardFieldType.Empty &&
+            (BoardFields[vertical + 1, horizontal] != (int)BoardFieldType.Ship) &&
+            (BoardFields[vertical - 1, horizontal] != (int)BoardFieldType.Ship) &&
+            (BoardFields[vertical, horizontal + 1] != (int)BoardFieldType.Ship) &&
+            (BoardFields[vertical, horizontal - 1] != (int)BoardFieldType.Ship) &&
+            (BoardFields[vertical - 1, horizontal + 1] != (int)BoardFieldType.Ship) &&
+            (BoardFields[vertical - 1, horizontal - 1] != (int)BoardFieldType.Ship) &&
+            (BoardFields[vertical + 1, horizontal + 1] != (int)BoardFieldType.Ship) &&
+            (BoardFields[vertical + 1, horizontal - 1] != (int)BoardFieldType.Ship))
         {
             return false;
         }
@@ -91,16 +102,16 @@ public class Board
     /// <returns>true if something was hit, false if it was a miss</returns>
     public bool LaunchAttack(int verticalCoordinate, int horizontalCoordinate)
     {
-        if (GeneratedBoard[verticalCoordinate, horizontalCoordinate] == (int)BoardFieldType.Ship)
+        if (BoardFields[verticalCoordinate, horizontalCoordinate] == (int)BoardFieldType.Ship)
         {
             // Mark that spot as hit
-            GeneratedBoard[verticalCoordinate, horizontalCoordinate] = (int)BoardFieldType.Shipwreck;
+            BoardFields[verticalCoordinate, horizontalCoordinate] = (int)BoardFieldType.Shipwreck;
             return true;
         }
         else
         {
             // Mark that spot as a miss
-            GeneratedBoard[verticalCoordinate, horizontalCoordinate] = (int)BoardFieldType.Mishit;
+            BoardFields[verticalCoordinate, horizontalCoordinate] = (int)BoardFieldType.Mishit;
             return false;
         }
     }
@@ -110,7 +121,7 @@ public class Board
     /// </summary>
     public bool CheckIfDefeated()
     {
-        if (!GeneratedBoard.Cast<int>().Contains((int)BoardFieldType.Ship))
+        if (!BoardFields.Cast<int>().Contains((int)BoardFieldType.Ship))
         {
             return true;
         }
