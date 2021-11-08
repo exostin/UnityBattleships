@@ -89,7 +89,7 @@ public class Enemy : Player
         {
             int _vert = Random.Range(board.FirstGridPos, board.LastVerticalGridPos);
             int _hor = Random.Range(board.FirstGridPos, board.LastHorizontalGridPos);
-            if (PlayerBoardGrid[_vert, _hor] != (int)BoardFieldType.Miss && PlayerBoardGrid[_vert, _hor] != (int)BoardFieldType.Hit)
+            if (PlayerBoardGrid[_vert, _hor] != (int)BoardFieldType.Mishit && PlayerBoardGrid[_vert, _hor] != (int)BoardFieldType.Shipwreck)
             {
                 VerticalCoord = _vert;
                 HorizontalCoord = _hor;
@@ -101,7 +101,7 @@ public class Enemy : Player
     public void GenerateUnusedCoordsWithUnpopulatedNeighbours()
     {
         GenerateUnusedCoords();
-        while (CheckIfThereAreNeighbours())
+        while (CheckForNeighbouringShipwrecks())
         {
             GenerateUnusedCoords();
         }
@@ -115,16 +115,16 @@ public class Enemy : Player
         }
     }
 
-    public bool CheckIfThereAreNeighbours()
+    public bool CheckForNeighbouringShipwrecks()
     {
-        if ((PlayerBoardGrid[VerticalCoord + 1, HorizontalCoord] != (int)BoardFieldType.Hit) &&
-            (PlayerBoardGrid[VerticalCoord - 1, HorizontalCoord] != (int)BoardFieldType.Hit) &&
-            (PlayerBoardGrid[VerticalCoord, HorizontalCoord + 1] != (int)BoardFieldType.Hit) &&
-            (PlayerBoardGrid[VerticalCoord, HorizontalCoord - 1] != (int)BoardFieldType.Hit) &&
-            (PlayerBoardGrid[VerticalCoord - 1, HorizontalCoord + 1] != (int)BoardFieldType.Hit) &&
-            (PlayerBoardGrid[VerticalCoord - 1, HorizontalCoord - 1] != (int)BoardFieldType.Hit) &&
-            (PlayerBoardGrid[VerticalCoord + 1, HorizontalCoord + 1] != (int)BoardFieldType.Hit) &&
-            (PlayerBoardGrid[VerticalCoord + 1, HorizontalCoord - 1] != (int)BoardFieldType.Hit))
+        if ((PlayerBoardGrid[VerticalCoord + 1, HorizontalCoord] != (int)BoardFieldType.Shipwreck) &&
+            (PlayerBoardGrid[VerticalCoord - 1, HorizontalCoord] != (int)BoardFieldType.Shipwreck) &&
+            (PlayerBoardGrid[VerticalCoord, HorizontalCoord + 1] != (int)BoardFieldType.Shipwreck) &&
+            (PlayerBoardGrid[VerticalCoord, HorizontalCoord - 1] != (int)BoardFieldType.Shipwreck) &&
+            (PlayerBoardGrid[VerticalCoord - 1, HorizontalCoord + 1] != (int)BoardFieldType.Shipwreck) &&
+            (PlayerBoardGrid[VerticalCoord - 1, HorizontalCoord - 1] != (int)BoardFieldType.Shipwreck) &&
+            (PlayerBoardGrid[VerticalCoord + 1, HorizontalCoord + 1] != (int)BoardFieldType.Shipwreck) &&
+            (PlayerBoardGrid[VerticalCoord + 1, HorizontalCoord - 1] != (int)BoardFieldType.Shipwreck))
         {
             return false;
         }

@@ -16,7 +16,8 @@ public class ShipFunctionality : MonoBehaviour, IPointerClickHandler
 
     public void SelectAttackCoordsByPlayer()
     {
-        if (gm.enemy.board.GeneratedBoard[VertCoord, HorCoord] != (int)BoardFieldType.Miss && gm.enemy.board.GeneratedBoard[VertCoord, HorCoord] != (int)BoardFieldType.Hit)
+        if (gm.enemy.board.GeneratedBoard[VertCoord, HorCoord] != (int)BoardFieldType.Mishit
+            && gm.enemy.board.GeneratedBoard[VertCoord, HorCoord] != (int)BoardFieldType.Shipwreck)
         {
             gm.PlayerVerticalAttackCoord = VertCoord;
             gm.PlayerHorizontalAttackCoord = HorCoord;
@@ -36,7 +37,7 @@ public class ShipFunctionality : MonoBehaviour, IPointerClickHandler
     {
         if (!FlagActive)
         {
-            gm.enemy.board.GeneratedBoard[VertCoord, HorCoord] = (int)BoardFieldType.Flag;
+            gm.enemy.board.GeneratedBoard[VertCoord, HorCoord] = (int)BoardFieldType.PlayerFlag;
         }
         else
         {

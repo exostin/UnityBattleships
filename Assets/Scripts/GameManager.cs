@@ -65,7 +65,7 @@ public class GameManager : MonoBehaviour
 
                 // ------------ NOT WORKING CORRECTLY
                 enemyShip.GetComponent<ShipFunctionality>().OriginalValue = enemy.board.GeneratedBoard[j, i];
-                if (enemy.board.GeneratedBoard[j, i] == (int)BoardFieldType.Flag)
+                if (enemy.board.GeneratedBoard[j, i] == (int)BoardFieldType.PlayerFlag)
                 {
                     enemyShip.GetComponent<ShipFunctionality>().FlagActive = true;
                 }

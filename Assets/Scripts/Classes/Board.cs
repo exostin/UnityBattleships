@@ -29,7 +29,7 @@ public class Board
             {
                 var randomVerticalStartPoint = Random.Range(FirstGridPos, LastVerticalGridPos);
                 var randomHorizontalStartPoint = Random.Range(FirstGridPos, LastHorizontalGridPos);
-                if (!CheckIfTheresShipNearby(randomVerticalStartPoint, randomHorizontalStartPoint))
+                if (!CheckIfTheresSpaceForShip(randomVerticalStartPoint, randomHorizontalStartPoint))
                 {
                     GeneratedBoard[randomVerticalStartPoint, randomHorizontalStartPoint] = (int)BoardFieldType.Ship;
                     i++;
@@ -58,7 +58,7 @@ public class Board
     /// <param name="vertical">Vertical coordinate to check</param>
     /// <param name="horizontal">Vertical coordinate to check</param>
     /// <returns>true if there is a ship nearby, false if there are none</returns>
-    public bool CheckIfTheresShipNearby(int vertical, int horizontal)
+    public bool CheckIfTheresSpaceForShip(int vertical, int horizontal)
     {
         if (GeneratedBoard[vertical, horizontal] == (int)BoardFieldType.Empty &&
             (GeneratedBoard[vertical + 1, horizontal] != (int)BoardFieldType.Ship) &&
@@ -78,7 +78,6 @@ public class Board
         }
     }
 
-    // 0 - empty space, 1 - a ship, 2 - miss, 3 - hit, 4 - flag
     /// <summary>
     /// Launches an attack at the generated board
     /// </summary>
@@ -90,13 +89,13 @@ public class Board
         if (GeneratedBoard[verticalCoordinate, horizontalCoordinate] == (int)BoardFieldType.Ship)
         {
             // Mark that spot as hit
-            GeneratedBoard[verticalCoordinate, horizontalCoordinate] = (int)BoardFieldType.Hit;
+            GeneratedBoard[verticalCoordinate, horizontalCoordinate] = (int)BoardFieldType.Shipwreck;
             return true;
         }
         else
         {
             // Mark that spot as a miss
-            GeneratedBoard[verticalCoordinate, horizontalCoordinate] = (int)BoardFieldType.Miss;
+            GeneratedBoard[verticalCoordinate, horizontalCoordinate] = (int)BoardFieldType.Mishit;
             return false;
         }
     }
