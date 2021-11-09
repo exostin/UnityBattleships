@@ -1,12 +1,9 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
-public class Field : MonoBehaviour
+public class Field
 {
-    public int Type { get; set; } = (int)BoardFieldType.Empty;
+    public int Type { get; set; }
     public int VerticalCoord { get; set; }
     public int HorizontalCoord { get; set; }
+    public bool FlagIsActive { get; set; }
 
     public Field(int fieldType, int vert, int hor)
     {
