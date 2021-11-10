@@ -8,21 +8,6 @@ public class Board
     public int LastHorizontalGridPos { get; set; }
     public Field[,] BoardFields { get; set; }
 
-    private const int defaultBoardVerticalSize = 12;
-    private const int defaultBoardHorizontalSize = 12;
-
-    public Board()
-    {
-        BoardFields = new Field[defaultBoardVerticalSize, defaultBoardHorizontalSize];
-        for (int i = 0; i < defaultBoardHorizontalSize; i++)
-        {
-            for (int j = 0; j < defaultBoardVerticalSize; j++)
-            {
-                BoardFields[j, i] = new Field((int)BoardFieldType.Empty, vert: j, hor: i);
-            }
-        }
-    }
-
     /// <summary>
     /// Populate a board with a defined number of ships of specified type
     /// </summary>

@@ -23,6 +23,7 @@ public class GameManager : MonoBehaviour
     public TextMeshProUGUI turnCounterText;
     public GameObject winCanvas;
     public GameObject loseCanvas;
+    public Button playButton;
 
     private int turnCount = 1;
     private const float resultScreenDuration = 2f;
@@ -193,5 +194,18 @@ public class GameManager : MonoBehaviour
         Instantiate(winCanvas);
         yield return new WaitForSeconds(resultScreenDuration);
         SceneManager.LoadScene(0);
+    }
+
+    public void LockPlayIfStringEmpty()
+    {
+        if (BoardHorizontalSize != null && BoardHorizontalSize.Length > 0 &&
+            Convert.ToInt32(BoardHorizontalSize) >= 1 && Convert.ToInt32(BoardHorizontalSize) <= 11)
+        {
+            playButton.interactable = true;
+        }
+        else
+        {
+            playButton.interactable = false;
+        }
     }
 }
