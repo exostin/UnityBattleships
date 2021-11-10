@@ -3,7 +3,7 @@ using UnityEngine;
 public class Enemy : Player
 {
     public Field[,] PlayerBoardGrid { get; set; }
-    public int CurrentDifficulty { get; set; } = 0;
+    public int CurrentDifficulty { get; set; }
     private int VerticalCoord { get; set; }
     private int HorizontalCoord { get; set; }
     private int[] AttackCoords { get; set; }
@@ -13,19 +13,19 @@ public class Enemy : Player
     {
         switch (CurrentDifficulty)
         {
-            case 0:
+            case (int)DifficultyLevel.Baby:
                 BabyAI();
                 break;
 
-            case 1:
+            case (int)DifficultyLevel.Easy:
                 EasyAI();
                 break;
 
-            case 2:
+            case (int)DifficultyLevel.Normal:
                 NormalAI();
                 break;
 
-            case 3:
+            case (int)DifficultyLevel.Impossible:
                 ImpossibleAI();
                 break;
 
