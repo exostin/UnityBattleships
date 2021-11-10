@@ -3803,6 +3803,8 @@ MonoBehaviour:
   playerBoardParent: {fileID: 481753636}
   enemyBoardParent: {fileID: 1798214314}
   turnCounterText: {fileID: 2075573017}
+  winCanvas: {fileID: 3089472656679911620, guid: 0503aea9a25540648bd99e8cde2d658f, type: 3}
+  loseCanvas: {fileID: 6941302063279553218, guid: f96952698aef648488ed322bc0a7e669, type: 3}
 --- !u!4 &2077322958
 Transform:
   m_ObjectHideFlags: 0

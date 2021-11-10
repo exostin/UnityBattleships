@@ -3,6 +3,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using System.Collections;
 
 public class GameManager : MonoBehaviour
 {
@@ -20,8 +21,11 @@ public class GameManager : MonoBehaviour
     public GameObject enemyBoardParent;
 
     public TextMeshProUGUI turnCounterText;
+    public GameObject winCanvas;
+    public GameObject loseCanvas;
 
     private int turnCount = 1;
+    private const float resultScreenDuration = 2f;
 
     public string BoardVerticalSize { get; set; }
     public string BoardHorizontalSize { get; set; }
@@ -83,8 +87,7 @@ public class GameManager : MonoBehaviour
         RefreshBoard(2);
         if (enemy.board.CheckIfDefeated())
         {
-            Debug.Log("You win!");
-            SceneManager.LoadScene(0);
+            StartCoroutine(EnemyDefeat(resultScreenDuration));
             return;
         }
         if (_hitSuccess)
@@ -103,8 +106,7 @@ public class GameManager : MonoBehaviour
             RefreshBoard(1);
             if (player.board.CheckIfDefeated())
             {
-                Debug.Log("You lose!");
-                SceneManager.LoadScene(0);
+                StartCoroutine(PlayerDefeat(resultScreenDuration));
                 return;
             }
 
@@ -160,5 +162,21 @@ public class GameManager : MonoBehaviour
     public void ShowTurn()
     {
         turnCounterText.text = "Turn: " + turnCount;
+    }
+
+    private IEnumerator PlayerDefeat(float seconds)
+    {
+        Debug.Log("You lose!");
+        Instantiate(loseCanvas);
+        yield return new WaitForSeconds(seconds);
+        SceneManager.LoadScene(0);
+    }
+
+    private IEnumerator EnemyDefeat(float seconds)
+    {
+        Debug.Log("You Win!");
+        Instantiate(winCanvas);
+        yield return new WaitForSeconds(seconds);
+        SceneManager.LoadScene(0);
     }
 }
