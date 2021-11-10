@@ -26,7 +26,11 @@ public class GameManager : MonoBehaviour
 
     private int turnCount = 1;
     private const float resultScreenDuration = 2f;
-    private const float distanceBetweenTilesMultiplier = 40f;
+
+    // private const float distanceBetweenTilesMultiplier = 40f;
+    public bool UseLegacySprites { get; set; } = false;
+
+    private int spriteSetting;
 
     public string BoardVerticalSize { get; set; }
     public string BoardHorizontalSize { get; set; }
@@ -48,10 +52,12 @@ public class GameManager : MonoBehaviour
         {
             for (int j = 1; j < LastVerticalGridPos; j++)
             {
-                GameObject playerShip = Instantiate(playerShipPrefab, new Vector2(i * distanceBetweenTilesMultiplier,
-                    Screen.height + (-j * distanceBetweenTilesMultiplier)), Quaternion.identity, playerBoardParent.transform);
+                // No longer needed since using Grid Layout Grid component in Unity
+                //GameObject playerShip = Instantiate(playerShipPrefab, new Vector2(i * distanceBetweenTilesMultiplier,
+                //    Screen.height + (-j * distanceBetweenTilesMultiplier)), Quaternion.identity, playerBoardParent.transform);
 
-                playerShip.GetComponent<Image>().sprite = spriteList[player.board.BoardFields[j, i].Type];
+                GameObject playerShip = Instantiate(playerShipPrefab, playerBoardParent.transform);
+                playerShip.GetComponent<Image>().sprite = spriteList[player.board.BoardFields[j, i].Type + spriteSetting];
             }
         }
     }
@@ -63,22 +69,25 @@ public class GameManager : MonoBehaviour
         {
             for (int j = 1; j < LastVerticalGridPos; j++)
             {
-                GameObject enemyShip = Instantiate(enemyShipPrefab, new Vector2((Screen.width / 2) + (i * distanceBetweenTilesMultiplier),
-                    Screen.height + (-j * distanceBetweenTilesMultiplier)), Quaternion.identity, enemyBoardParent.transform);
+                // No longer needed since using Grid Layout Group component in Unity
+                //GameObject enemyShip = Instantiate(enemyShipPrefab, new Vector2((Screen.width / 2) + (i * distanceBetweenTilesMultiplier),
+                //    Screen.height + (-j * distanceBetweenTilesMultiplier)), Quaternion.identity, enemyBoardParent.transform);
+
+                GameObject enemyShip = Instantiate(enemyShipPrefab, enemyBoardParent.transform);
                 enemyShip.GetComponent<ShipFunctionality>().HorCoord = i;
                 enemyShip.GetComponent<ShipFunctionality>().VertCoord = j;
 
                 if (enemy.board.BoardFields[j, i].FlagIsActive)
                 {
-                    enemyShip.GetComponent<Image>().sprite = spriteList[(int)BoardFieldType.PlayerFlag];
+                    enemyShip.GetComponent<Image>().sprite = spriteList[(int)BoardFieldType.PlayerFlag + spriteSetting];
                 }
                 else if (enemy.board.BoardFields[j, i].Type != (int)BoardFieldType.Ship)
                 {
-                    enemyShip.GetComponent<Image>().sprite = spriteList[enemy.board.BoardFields[j, i].Type];
+                    enemyShip.GetComponent<Image>().sprite = spriteList[enemy.board.BoardFields[j, i].Type + spriteSetting];
                 }
                 else
                 {
-                    enemyShip.GetComponent<Image>().sprite = spriteList[0];
+                    enemyShip.GetComponent<Image>().sprite = spriteList[0 + spriteSetting];
                 }
             }
         }
@@ -131,6 +140,10 @@ public class GameManager : MonoBehaviour
         LastHorizontalGridPos = player.board.LastHorizontalGridPos;
         LastVerticalGridPos = player.board.LastVerticalGridPos;
         enemy.PlayerBoardGrid = player.board.BoardFields;
+
+        if (UseLegacySprites) { spriteSetting = 5; }
+        else { spriteSetting = 0; }
+
         RefreshBoard();
         ShowTurn();
     }

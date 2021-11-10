@@ -21,10 +21,10 @@ public class ShipFunctionality : MonoBehaviour, IPointerClickHandler
         {
             ToggleFlag();
         }
-        if (eventData.button == PointerEventData.InputButton.Left)
-        {
-            SelectAttackCoordsByPlayer();
-        }
+        //if (eventData.button == PointerEventData.InputButton.Left)
+        //{
+        //    SelectAttackCoordsByPlayer();
+        //}
     }
 
     public void SelectAttackCoordsByPlayer()
