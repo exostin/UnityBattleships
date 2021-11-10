@@ -87,7 +87,7 @@ public class GameManager : MonoBehaviour
         RefreshBoard(2);
         if (enemy.board.CheckIfDefeated())
         {
-            StartCoroutine(EnemyDefeat(resultScreenDuration));
+            StartCoroutine(EnemyDefeat());
             return;
         }
         if (_hitSuccess)
@@ -106,7 +106,7 @@ public class GameManager : MonoBehaviour
             RefreshBoard(1);
             if (player.board.CheckIfDefeated())
             {
-                StartCoroutine(PlayerDefeat(resultScreenDuration));
+                StartCoroutine(PlayerDefeat());
                 return;
             }
 
@@ -164,19 +164,19 @@ public class GameManager : MonoBehaviour
         turnCounterText.text = "Turn: " + turnCount;
     }
 
-    private IEnumerator PlayerDefeat(float seconds)
+    private IEnumerator PlayerDefeat()
     {
         Debug.Log("You lose!");
         Instantiate(loseCanvas);
-        yield return new WaitForSeconds(seconds);
+        yield return new WaitForSeconds(resultScreenDuration);
         SceneManager.LoadScene(0);
     }
 
-    private IEnumerator EnemyDefeat(float seconds)
+    private IEnumerator EnemyDefeat()
     {
         Debug.Log("You Win!");
         Instantiate(winCanvas);
-        yield return new WaitForSeconds(seconds);
+        yield return new WaitForSeconds(resultScreenDuration);
         SceneManager.LoadScene(0);
     }
 }
