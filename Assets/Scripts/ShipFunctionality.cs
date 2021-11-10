@@ -15,6 +15,18 @@ public class ShipFunctionality : MonoBehaviour, IPointerClickHandler
         gm = FindObjectOfType<GameManager>();
     }
 
+    public virtual void OnPointerClick(PointerEventData eventData)
+    {
+        if (eventData.button == PointerEventData.InputButton.Right)
+        {
+            ToggleFlag();
+        }
+        if (eventData.button == PointerEventData.InputButton.Left)
+        {
+            SelectAttackCoordsByPlayer();
+        }
+    }
+
     public void SelectAttackCoordsByPlayer()
     {
         if (gm.enemy.board.BoardFields[VertCoord, HorCoord].Type != (int)BoardFieldType.Mishit
@@ -23,14 +35,6 @@ public class ShipFunctionality : MonoBehaviour, IPointerClickHandler
             gm.PlayerVerticalAttackCoord = VertCoord;
             gm.PlayerHorizontalAttackCoord = HorCoord;
             gm.MakeTurn();
-        }
-    }
-
-    public virtual void OnPointerClick(PointerEventData eventData)
-    {
-        if (eventData.button == PointerEventData.InputButton.Right)
-        {
-            ToggleFlag();
         }
     }
 

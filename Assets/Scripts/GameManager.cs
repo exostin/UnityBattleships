@@ -26,6 +26,7 @@ public class GameManager : MonoBehaviour
 
     private int turnCount = 1;
     private const float resultScreenDuration = 2f;
+    private const float distanceBetweenTilesMultiplier = 40f;
 
     public string BoardVerticalSize { get; set; }
     public string BoardHorizontalSize { get; set; }
@@ -33,7 +34,7 @@ public class GameManager : MonoBehaviour
     // Hardcoding the configuration index because it doesn't even mean anything yet
     private const int configurationIndex = 1;
 
-    public int DifficultyIndex { get; set; }
+    public int DifficultyIndex { get; set; } = (int)DifficultyLevel.Normal;
     public int PlayerVerticalAttackCoord { get; set; }
     public int PlayerHorizontalAttackCoord { get; set; }
 
@@ -47,7 +48,8 @@ public class GameManager : MonoBehaviour
         {
             for (int j = 1; j < LastVerticalGridPos; j++)
             {
-                GameObject playerShip = Instantiate(playerShipPrefab, new Vector2(i * 60, Screen.height + (-j * 60)), Quaternion.identity, playerBoardParent.transform);
+                GameObject playerShip = Instantiate(playerShipPrefab, new Vector2(i * distanceBetweenTilesMultiplier,
+                    Screen.height + (-j * distanceBetweenTilesMultiplier)), Quaternion.identity, playerBoardParent.transform);
 
                 playerShip.GetComponent<Image>().sprite = spriteList[player.board.BoardFields[j, i].Type];
             }
@@ -61,7 +63,8 @@ public class GameManager : MonoBehaviour
         {
             for (int j = 1; j < LastVerticalGridPos; j++)
             {
-                GameObject enemyShip = Instantiate(enemyShipPrefab, new Vector2((Screen.width / 2) + (i * 60), Screen.height + (-j * 60)), Quaternion.identity, enemyBoardParent.transform);
+                GameObject enemyShip = Instantiate(enemyShipPrefab, new Vector2((Screen.width / 2) + (i * distanceBetweenTilesMultiplier),
+                    Screen.height + (-j * distanceBetweenTilesMultiplier)), Quaternion.identity, enemyBoardParent.transform);
                 enemyShip.GetComponent<ShipFunctionality>().HorCoord = i;
                 enemyShip.GetComponent<ShipFunctionality>().VertCoord = j;
 
@@ -117,6 +120,7 @@ public class GameManager : MonoBehaviour
         }
 
         turnCount++;
+        ShowTurn();
     }
 
     public void PlayButton()
@@ -128,6 +132,7 @@ public class GameManager : MonoBehaviour
         LastVerticalGridPos = player.board.LastVerticalGridPos;
         enemy.PlayerBoardGrid = player.board.BoardFields;
         RefreshBoard();
+        ShowTurn();
     }
 
     /// <param name="whichBoard">1 - player board, 2 - enemy board, else: both boards</param>
@@ -136,18 +141,15 @@ public class GameManager : MonoBehaviour
         if (whichBoard == 1)
         {
             PrintPlayerGrid();
-            ShowTurn();
         }
         if (whichBoard == 2)
         {
             PrintEnemyGrid();
-            ShowTurn();
         }
         else
         {
             PrintPlayerGrid();
             PrintEnemyGrid();
-            ShowTurn();
         }
     }
 
