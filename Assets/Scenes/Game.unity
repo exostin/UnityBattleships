@@ -461,7 +461,7 @@ MonoBehaviour:
   m_ChildAlignment: 4
   m_StartCorner: 0
   m_StartAxis: 1
-  m_CellSize: {x: 50, y: 50}
+  m_CellSize: {x: 70, y: 70}
   m_Spacing: {x: 20, y: 20}
   m_Constraint: 1
   m_ConstraintCount: 1
@@ -2448,7 +2448,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: (1x1 - 11x11)
+  m_text: (1x1 - 10x10)
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -3035,7 +3035,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: -480.23, y: -55}
+  m_AnchoredPosition: {x: -480.23, y: -24.999971}
   m_SizeDelta: {x: 319.4217, y: 50}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!114 &1522070202
@@ -3390,7 +3390,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: 480.23, y: -55}
+  m_AnchoredPosition: {x: 480.23, y: -24.999971}
   m_SizeDelta: {x: 396.1927, y: 50}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!114 &1608895451
@@ -3681,7 +3681,7 @@ MonoBehaviour:
   m_ChildAlignment: 4
   m_StartCorner: 0
   m_StartAxis: 1
-  m_CellSize: {x: 50, y: 50}
+  m_CellSize: {x: 70, y: 70}
   m_Spacing: {x: 20, y: 20}
   m_Constraint: 1
   m_ConstraintCount: 1
@@ -4062,7 +4062,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: 0, y: -55.00003}
+  m_AnchoredPosition: {x: 0, y: -25}
   m_SizeDelta: {x: 296.0276, y: 50}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!114 &2075573017
@@ -4192,11 +4192,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   spriteList:
-  - {fileID: 21300000, guid: 691463614742ff147b6470924ad29417, type: 3}
-  - {fileID: 21300000, guid: b1ca524255303aa4ba3b7c75ecf447ee, type: 3}
-  - {fileID: 21300000, guid: ce9077d69c67fe04d905410949341fe5, type: 3}
-  - {fileID: 21300000, guid: 6dbae488d7a4ac440b44e5aa282656d0, type: 3}
-  - {fileID: 21300000, guid: 4748658802538524ab3205e858310a04, type: 3}
+  - {fileID: 21300000, guid: b26fa980154c16d43ad6ae53456ec30b, type: 3}
+  - {fileID: 21300000, guid: e3fc4d3aec5fffa44877ca525383ea7b, type: 3}
+  - {fileID: 21300000, guid: 30e39aa7fb8af2f4c80abce8a5f6bd29, type: 3}
+  - {fileID: 21300000, guid: d73a24e0737ecb54aa2633ef30bb3f9e, type: 3}
+  - {fileID: 21300000, guid: 9ab3ee8bbf638b54daf6c6137363bccc, type: 3}
   - {fileID: 21300000, guid: 4f0ec4516a5f3d1428afd0049c81e1bf, type: 3}
   - {fileID: 21300000, guid: 8875c4a2e4ae4e747a7fe1fd8153040c, type: 3}
   - {fileID: 21300000, guid: 6da56dd4440148c44bf55e5645717700, type: 3}

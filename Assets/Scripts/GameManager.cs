@@ -199,7 +199,7 @@ public class GameManager : MonoBehaviour
     public void LockPlayIfStringEmpty()
     {
         if (BoardHorizontalSize != null && BoardHorizontalSize.Length > 0 &&
-            Convert.ToInt32(BoardHorizontalSize) >= 1 && Convert.ToInt32(BoardHorizontalSize) <= 11)
+            Convert.ToInt32(BoardHorizontalSize) >= 1 && Convert.ToInt32(BoardHorizontalSize) <= 10)
         {
             playButton.interactable = true;
         }
