@@ -905,7 +905,7 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4294967295
+    rgba: 4281479730
   m_fontColor: {r: 0.19607843, g: 0.19607843, b: 0.19607843, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
@@ -918,7 +918,7 @@ MonoBehaviour:
   m_spriteAsset: {fileID: 0}
   m_tintAllSprites: 0
   m_StyleSheet: {fileID: 0}
-  m_TextStyleHashCode: 0
+  m_TextStyleHashCode: -1183493901
   m_overrideHtmlColors: 0
   m_faceColor:
     serializedVersion: 2
@@ -1219,7 +1219,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: -18, y: 0}
+  m_SizeDelta: {x: -17, y: 0}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &800859668
 MonoBehaviour:
@@ -1755,7 +1755,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 1278822904}
   m_Direction: 2
   m_Value: 0
-  m_Size: 0.2
+  m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -2041,16 +2041,14 @@ MonoBehaviour:
   m_Placeholder: {fileID: 0}
   m_ItemText: {fileID: 761305580}
   m_ItemImage: {fileID: 0}
-  m_Value: 2
+  m_Value: 1
   m_Options:
     m_Options:
-    - m_Text: Baby
-      m_Image: {fileID: 0}
-    - m_Text: Easy
+    - m_Text: Dumb
       m_Image: {fileID: 0}
     - m_Text: Normal
       m_Image: {fileID: 0}
-    - m_Text: Impossible
+    - m_Text: Good luck.
       m_Image: {fileID: 0}
   m_OnValueChanged:
     m_PersistentCalls:
@@ -2377,7 +2375,7 @@ RectTransform:
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 1, y: 0.2}
+  m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 20, y: 20}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -3888,11 +3886,6 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 30e39aa7fb8af2f4c80abce8a5f6bd29, type: 3}
   - {fileID: 21300000, guid: d73a24e0737ecb54aa2633ef30bb3f9e, type: 3}
   - {fileID: 21300000, guid: 9ab3ee8bbf638b54daf6c6137363bccc, type: 3}
-  - {fileID: 21300000, guid: 4f0ec4516a5f3d1428afd0049c81e1bf, type: 3}
-  - {fileID: 21300000, guid: 8875c4a2e4ae4e747a7fe1fd8153040c, type: 3}
-  - {fileID: 21300000, guid: 6da56dd4440148c44bf55e5645717700, type: 3}
-  - {fileID: 21300000, guid: df6b430feb00a144eb7a81234b8d43f0, type: 3}
-  - {fileID: 21300000, guid: 9a485af211cfee94182f827c6f8c0f86, type: 3}
   enemyShipPrefab: {fileID: 3455212372282679094, guid: 580a16021669cc740863093fa3b5d5f9, type: 3}
   playerShipPrefab: {fileID: 3455212372282679094, guid: a54b36c551ce26140a81f042af7f441a, type: 3}
   playerBoardParent: {fileID: 481753636}

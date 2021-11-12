@@ -1,7 +1,6 @@
 public enum DifficultyLevel
 {
-    Baby = 0,
-    Easy = 1,
-    Normal = 2,
-    Impossible = 3
+    Easy = 0,
+    Normal = 1,
+    Impossible = 2
 }

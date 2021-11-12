@@ -13,10 +13,6 @@ public class Enemy : Player
     {
         switch (CurrentDifficulty)
         {
-            case (int)DifficultyLevel.Baby:
-                BabyAI();
-                break;
-
             case (int)DifficultyLevel.Easy:
                 EasyAI();
                 break;
@@ -35,22 +31,6 @@ public class Enemy : Player
         }
         AttackCoords = new int[] { VerticalCoord, HorizontalCoord };
         return AttackCoords;
-    }
-
-    /// <summary>
-    /// Has a small chance to purposefully reroll the coords if they would hit a ship
-    /// </summary>
-    public void BabyAI()
-    {
-        GenerateUnusedCoords();
-        if (PlayerBoardGrid[VerticalCoord, HorizontalCoord].Type == (int)BoardFieldType.Ship)
-        {
-            var missCheck = Random.Range(1, 101);
-            if (missCheck <= MissOnPurposeChance)
-            {
-                GenerateUnusedCoords();
-            }
-        }
     }
 
     /// <summary>
