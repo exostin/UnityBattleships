@@ -29,9 +29,6 @@ public class GameManager : MonoBehaviour
     private const float resultScreenDuration = 2f;
 
     // private const float distanceBetweenTilesMultiplier = 40f;
-    public bool UseLegacySprites { get; set; } = false;
-
-    private int spriteSetting;
 
     public string BoardVerticalSize { get; set; }
     public string BoardHorizontalSize { get; set; }
@@ -58,7 +55,7 @@ public class GameManager : MonoBehaviour
                 //    Screen.height + (-j * distanceBetweenTilesMultiplier)), Quaternion.identity, playerBoardParent.transform);
 
                 GameObject playerShip = Instantiate(playerShipPrefab, playerBoardParent.transform);
-                playerShip.GetComponent<Image>().sprite = spriteList[player.board.BoardFields[j, i].Type + spriteSetting];
+                playerShip.GetComponent<Image>().sprite = spriteList[player.board.BoardFields[j, i].Type];
             }
         }
     }
@@ -80,15 +77,15 @@ public class GameManager : MonoBehaviour
 
                 if (enemy.board.BoardFields[j, i].FlagIsActive)
                 {
-                    enemyShip.GetComponent<Image>().sprite = spriteList[(int)BoardFieldType.PlayerFlag + spriteSetting];
+                    enemyShip.GetComponent<Image>().sprite = spriteList[(int)BoardFieldType.PlayerFlag];
                 }
                 else if (enemy.board.BoardFields[j, i].Type != (int)BoardFieldType.Ship)
                 {
-                    enemyShip.GetComponent<Image>().sprite = spriteList[enemy.board.BoardFields[j, i].Type + spriteSetting];
+                    enemyShip.GetComponent<Image>().sprite = spriteList[enemy.board.BoardFields[j, i].Type];
                 }
                 else
                 {
-                    enemyShip.GetComponent<Image>().sprite = spriteList[0 + spriteSetting];
+                    enemyShip.GetComponent<Image>().sprite = spriteList[0];
                 }
             }
         }
@@ -141,9 +138,6 @@ public class GameManager : MonoBehaviour
         LastHorizontalGridPos = player.board.LastHorizontalGridPos;
         LastVerticalGridPos = player.board.LastVerticalGridPos;
         enemy.PlayerBoardGrid = player.board.BoardFields;
-
-        if (UseLegacySprites) { spriteSetting = 5; }
-        else { spriteSetting = 0; }
 
         RefreshBoard();
         ShowTurn();
