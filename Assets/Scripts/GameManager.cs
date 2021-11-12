@@ -27,6 +27,8 @@ public class GameManager : MonoBehaviour
 
     private int turnCount = 1;
     private const float resultScreenDuration = 2f;
+    private const int minBoardSize = 2;
+    private const int maxBoardSize = 10;
 
     // private const float distanceBetweenTilesMultiplier = 40f;
 
@@ -193,7 +195,7 @@ public class GameManager : MonoBehaviour
     public void LockPlayIfStringEmpty()
     {
         if (BoardHorizontalSize != null && BoardHorizontalSize.Length > 0 &&
-            Convert.ToInt32(BoardHorizontalSize) >= 1 && Convert.ToInt32(BoardHorizontalSize) <= 10)
+            Convert.ToInt32(BoardHorizontalSize) >= minBoardSize && Convert.ToInt32(BoardHorizontalSize) <= maxBoardSize)
         {
             playButton.interactable = true;
         }
