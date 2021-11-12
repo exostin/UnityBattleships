@@ -9,12 +9,14 @@ public class Enemy : Player
     private int[] AttackCoords { get; set; }
     private int MissOnPurposeChance { get; set; } = 33;
 
+    public int[] LastPlayerAttackCoords { get; set; }
+
     public int[] DoAnAttack()
     {
         switch (CurrentDifficulty)
         {
-            case (int)DifficultyLevel.Easy:
-                EasyAI();
+            case (int)DifficultyLevel.Dumb:
+                DumbAI();
                 break;
 
             case (int)DifficultyLevel.Normal:
@@ -34,11 +36,23 @@ public class Enemy : Player
     }
 
     /// <summary>
-    /// Simply attack positions that haven't been hit yet
+    /// Mimic player attacks
     /// </summary>
-    public void EasyAI()
+    public void DumbAI()
     {
-        GenerateUnusedCoords();
+        int _vert = LastPlayerAttackCoords[0];
+        int _hor = LastPlayerAttackCoords[1];
+
+        if (PlayerBoardGrid[_vert, _hor].Type != (int)BoardFieldType.Mishit
+            && PlayerBoardGrid[_vert, _hor].Type != (int)BoardFieldType.Shipwreck)
+        {
+            VerticalCoord = _vert;
+            HorizontalCoord = _hor;
+        }
+        else
+        {
+            GenerateUnusedCoords();
+        }
     }
 
     /// <summary>

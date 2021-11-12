@@ -1,6 +1,6 @@
 public enum DifficultyLevel
 {
-    Easy = 0,
+    Dumb = 0,
     Normal = 1,
     Impossible = 2
 }

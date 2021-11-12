@@ -96,6 +96,11 @@ public class GameManager : MonoBehaviour
     public void MakeTurn()
     {
         var _hitSuccess = enemy.board.LaunchAttack(PlayerVerticalAttackCoord, PlayerHorizontalAttackCoord);
+        if (DifficultyIndex == (int)DifficultyLevel.Dumb)
+        {
+            enemy.LastPlayerAttackCoords = new int[] { PlayerVerticalAttackCoord, PlayerHorizontalAttackCoord };
+        }
+
         RefreshBoard(2);
         if (enemy.board.CheckIfDefeated())
         {
