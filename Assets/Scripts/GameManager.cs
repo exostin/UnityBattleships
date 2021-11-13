@@ -111,8 +111,12 @@ public class GameManager : MonoBehaviour
         }
         if (_hitSuccess)
         {
-            audioMg.PlaySound(0);
+            audioMg.PlaySound((int)SoundClips.Hit);
             return;
+        }
+        else
+        {
+            audioMg.PlaySound((int)SoundClips.Miss);
         }
         DoEnemyMove();
     }
@@ -188,6 +192,7 @@ public class GameManager : MonoBehaviour
     {
         Debug.Log("You lose!");
         Instantiate(loseCanvas);
+        audioMg.PlaySound((int)SoundClips.Defeat);
         yield return new WaitForSeconds(resultScreenDuration);
         SceneManager.LoadScene(0);
     }
@@ -196,6 +201,7 @@ public class GameManager : MonoBehaviour
     {
         Debug.Log("You Win!");
         Instantiate(winCanvas);
+        audioMg.PlaySound((int)SoundClips.Victory);
         yield return new WaitForSeconds(resultScreenDuration);
         SceneManager.LoadScene(0);
     }

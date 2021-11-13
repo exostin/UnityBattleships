@@ -6,8 +6,9 @@ public class AudioManager : MonoBehaviour
 {
     public AudioClip[] audioClips;
 
-    public void PlaySound(int soundIndex)
+    public void PlaySound(int clipIndex)
     {
-        // play a sound
+        gameObject.GetComponent<AudioSource>().clip = audioClips[clipIndex];
+        gameObject.GetComponent<AudioSource>().Play();
     }
 }
