@@ -20,6 +20,8 @@ public class GameManager : MonoBehaviour
     public GameObject playerBoardParent;
     public GameObject enemyBoardParent;
 
+    public AudioManager audioMg;
+
     public TextMeshProUGUI turnCounterText;
     public GameObject winCanvas;
     public GameObject loseCanvas;
@@ -109,6 +111,7 @@ public class GameManager : MonoBehaviour
         }
         if (_hitSuccess)
         {
+            audioMg.PlaySound(0);
             return;
         }
         DoEnemyMove();
