@@ -7,42 +7,46 @@ using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
-    public Player player = new Player();
-    public Enemy enemy = new Enemy();
-
-    public Sprite[] spriteList;
-
+    [Header("Prefabs")]
     public GameObject enemyShipPrefab;
+
     public GameObject playerShipPrefab;
+
+    [Header("Parents")]
     public GameObject playerBoardParent;
+
     public GameObject enemyBoardParent;
 
+    [Header("Canvases")]
+    public GameObject winCanvas;
+
+    public GameObject loseCanvas;
+
+    [Header("UI")]
+    public TextMeshProUGUI turnCounterText;
+
+    public Button playButton;
+    public Sprite[] spriteList;
+
+    [Header("Other")]
     public AudioManager audioMg;
 
-    public TextMeshProUGUI turnCounterText;
-    public GameObject winCanvas;
-    public GameObject loseCanvas;
-    public Button playButton;
-
-    private int turnCount = 1;
-    private const float resultScreenDuration = 2.8f;
-    private const int minBoardSize = 2;
-    private const int maxBoardSize = 10;
-
-    // private const float distanceBetweenTilesMultiplier = 40f;
-
+    public Player player = new Player();
+    public Enemy enemy = new Enemy();
     public string BoardVerticalSize { get; set; }
     public string BoardHorizontalSize { get; set; }
-
-    // Hardcoding the configuration index because it doesn't even mean anything yet
-    private const int configurationIndex = 1;
-
-    public int DifficultyIndex { get; set; } = (int)DifficultyLevel.Normal;
-    public int PlayerVerticalAttackCoord { get; set; }
-    public int PlayerHorizontalAttackCoord { get; set; }
-
     public int LastHorizontalGridPos { get; set; }
     public int LastVerticalGridPos { get; set; }
+    public int PlayerVerticalAttackCoord { get; set; }
+    public int PlayerHorizontalAttackCoord { get; set; }
+    public int DifficultyIndex { get; set; } = (int)DifficultyLevel.Normal;
+    public int ShipConfigurationIndex { get; set; } = 1;
+
+    private const int minBoardSize = 2;
+    private const int maxBoardSize = 10;
+    private const float resultScreenDuration = 2.8f;
+
+    private int turnCount = 1;
 
     public void PrintPlayerGrid()
     {
@@ -144,8 +148,8 @@ public class GameManager : MonoBehaviour
     public void PlayButton()
     {
         enemy.CurrentDifficulty = DifficultyIndex;
-        enemy.board.PopulateBoard(player.ChooseShipsConfiguration(configurationIndex), Convert.ToInt32(BoardVerticalSize) + 2, Convert.ToInt32(BoardHorizontalSize) + 2);
-        player.board.PopulateBoard(player.ChooseShipsConfiguration(configurationIndex), Convert.ToInt32(BoardVerticalSize) + 2, Convert.ToInt32(BoardHorizontalSize) + 2);
+        enemy.board.PopulateBoard(player.ChooseShipsConfiguration(ShipConfigurationIndex), Convert.ToInt32(BoardVerticalSize) + 2, Convert.ToInt32(BoardHorizontalSize) + 2);
+        player.board.PopulateBoard(player.ChooseShipsConfiguration(ShipConfigurationIndex), Convert.ToInt32(BoardVerticalSize) + 2, Convert.ToInt32(BoardHorizontalSize) + 2);
         LastHorizontalGridPos = player.board.LastHorizontalGridPos;
         LastVerticalGridPos = player.board.LastVerticalGridPos;
         enemy.PlayerBoardGrid = player.board.BoardFields;

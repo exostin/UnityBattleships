@@ -5,11 +5,11 @@ using UnityEngine.UI;
 public class AudioManager : MonoBehaviour
 {
     public AudioMixer audioMixer;
-    public AudioClip[] audioClips;
     private AudioSource audioSrc;
-    public Sprite[] muteIcons;
     public GameObject muteButton;
-    public GameObject slider;
+    public GameObject volumeSlider;
+    public AudioClip[] audioClips;
+    public Sprite[] muteIcons;
 
     private bool sliderActive = false;
 
@@ -27,7 +27,7 @@ public class AudioManager : MonoBehaviour
     public void ToggleSlider()
     {
         sliderActive = !sliderActive;
-        slider.SetActive(sliderActive);
+        volumeSlider.SetActive(sliderActive);
     }
 
     public void ChangeVolume(float volume)

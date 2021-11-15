@@ -2,10 +2,10 @@ using UnityEngine;
 
 public class Board
 {
+    public Field[,] BoardFields { get; set; }
     public int FirstGridPos { get; set; } = 1;
     public int LastVerticalGridPos { get; set; }
     public int LastHorizontalGridPos { get; set; }
-    public Field[,] BoardFields { get; set; }
 
     /// <summary>
     /// Populate a board with a defined number of ships of specified type
