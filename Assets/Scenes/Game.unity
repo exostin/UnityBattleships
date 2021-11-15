@@ -1910,6 +1910,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   audioMixer: {fileID: 24100000, guid: 4b782c144a9351544bd20170b6556bdb, type: 2}
+  muteButton: {fileID: 770562927}
+  volumeSlider: {fileID: 117196284}
   audioClips:
   - {fileID: 8300000, guid: cdf6e8451d185e742a2fe4ba8226b6a8, type: 3}
   - {fileID: 8300000, guid: f94e11f352d3b1d47b63d20605cc1a1a, type: 3}
@@ -1919,8 +1921,6 @@ MonoBehaviour:
   muteIcons:
   - {fileID: 21300000, guid: 3e49a683529ed284cb960ad7dc276a2e, type: 3}
   - {fileID: 21300000, guid: 2725d8b4a20a06543b5ddb5a944adb6a, type: 3}
-  muteButton: {fileID: 770562927}
-  slider: {fileID: 117196284}
 --- !u!82 &858646009
 AudioSource:
   m_ObjectHideFlags: 0
@@ -4664,21 +4664,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 221a0d793dec2d84897815d6043694ea, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  enemyShipPrefab: {fileID: 3455212372282679094, guid: 580a16021669cc740863093fa3b5d5f9, type: 3}
+  playerShipPrefab: {fileID: 3455212372282679094, guid: a54b36c551ce26140a81f042af7f441a, type: 3}
+  playerBoardParent: {fileID: 481753636}
+  enemyBoardParent: {fileID: 1798214314}
+  winCanvas: {fileID: 3089472656679911620, guid: 0503aea9a25540648bd99e8cde2d658f, type: 3}
+  loseCanvas: {fileID: 6941302063279553218, guid: f96952698aef648488ed322bc0a7e669, type: 3}
+  turnCounterText: {fileID: 2075573017}
+  playButton: {fileID: 2121962746}
   spriteList:
   - {fileID: 21300000, guid: b26fa980154c16d43ad6ae53456ec30b, type: 3}
   - {fileID: 21300000, guid: e3fc4d3aec5fffa44877ca525383ea7b, type: 3}
   - {fileID: 21300000, guid: 30e39aa7fb8af2f4c80abce8a5f6bd29, type: 3}
   - {fileID: 21300000, guid: d73a24e0737ecb54aa2633ef30bb3f9e, type: 3}
   - {fileID: 21300000, guid: 9ab3ee8bbf638b54daf6c6137363bccc, type: 3}
-  enemyShipPrefab: {fileID: 3455212372282679094, guid: 580a16021669cc740863093fa3b5d5f9, type: 3}
-  playerShipPrefab: {fileID: 3455212372282679094, guid: a54b36c551ce26140a81f042af7f441a, type: 3}
-  playerBoardParent: {fileID: 481753636}
-  enemyBoardParent: {fileID: 1798214314}
   audioMg: {fileID: 858646008}
-  turnCounterText: {fileID: 2075573017}
-  winCanvas: {fileID: 3089472656679911620, guid: 0503aea9a25540648bd99e8cde2d658f, type: 3}
-  loseCanvas: {fileID: 6941302063279553218, guid: f96952698aef648488ed322bc0a7e669, type: 3}
-  playButton: {fileID: 2121962746}
 --- !u!4 &2077322958
 Transform:
   m_ObjectHideFlags: 0
