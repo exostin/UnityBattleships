@@ -10,9 +10,6 @@ public class GameManager : MonoBehaviour
     public Player player = new Player();
     public Enemy enemy = new Enemy();
 
-    /// <summary>
-    /// 0 - empty, 1 - ship, 2 - miss, 3 - hit
-    /// </summary>
     public Sprite[] spriteList;
 
     public GameObject enemyShipPrefab;
@@ -28,7 +25,7 @@ public class GameManager : MonoBehaviour
     public Button playButton;
 
     private int turnCount = 1;
-    private const float resultScreenDuration = 2f;
+    private const float resultScreenDuration = 2.8f;
     private const int minBoardSize = 2;
     private const int maxBoardSize = 10;
 
@@ -103,7 +100,7 @@ public class GameManager : MonoBehaviour
             enemy.LastPlayerAttackCoords = new int[] { PlayerVerticalAttackCoord, PlayerHorizontalAttackCoord };
         }
 
-        RefreshBoard(2);
+        RefreshBoard((int)BoardOwner.Enemy);
         if (enemy.board.CheckIfDefeated())
         {
             StartCoroutine(EnemyDefeat());
@@ -127,7 +124,7 @@ public class GameManager : MonoBehaviour
         {
             int[] _enemyAttackCoords = enemy.DoAnAttack();
             var _hitSuccess = player.board.LaunchAttack(_enemyAttackCoords[0], _enemyAttackCoords[1]);
-            RefreshBoard(1);
+            RefreshBoard((int)BoardOwner.Player);
             if (player.board.CheckIfDefeated())
             {
                 StartCoroutine(PlayerDefeat());
@@ -157,14 +154,14 @@ public class GameManager : MonoBehaviour
         ShowTurn();
     }
 
-    /// <param name="whichBoard">1 - player board, 2 - enemy board, else: both boards</param>
+    /// <param name="whichBoard">BoardOwner.Player/BoardOwner.Enemy/nothing to refresh them both</param>
     public void RefreshBoard(int whichBoard = 0)
     {
-        if (whichBoard == 1)
+        if (whichBoard == (int)BoardOwner.Player)
         {
             PrintPlayerGrid();
         }
-        if (whichBoard == 2)
+        if (whichBoard == (int)BoardOwner.Enemy)
         {
             PrintEnemyGrid();
         }
@@ -190,7 +187,6 @@ public class GameManager : MonoBehaviour
 
     private IEnumerator PlayerDefeat()
     {
-        Debug.Log("You lose!");
         Instantiate(loseCanvas);
         audioMg.PlaySound((int)SoundClips.Defeat);
         yield return new WaitForSeconds(resultScreenDuration);
@@ -199,7 +195,6 @@ public class GameManager : MonoBehaviour
 
     private IEnumerator EnemyDefeat()
     {
-        Debug.Log("You Win!");
         Instantiate(winCanvas);
         audioMg.PlaySound((int)SoundClips.Victory);
         yield return new WaitForSeconds(resultScreenDuration);

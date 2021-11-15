@@ -5,12 +5,6 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Audio;
 
-public enum MuteIconStates
-{
-    muted = 0,
-    unmuted = 1
-}
-
 public class AudioManager : MonoBehaviour
 {
     public AudioMixer audioMixer;
@@ -45,11 +39,11 @@ public class AudioManager : MonoBehaviour
 
         if (volume == -80f)
         {
-            muteButton.GetComponent<Image>().sprite = muteIcons[(int)MuteIconStates.muted];
+            muteButton.GetComponent<Image>().sprite = muteIcons[(int)MuteIconState.muted];
         }
         else
         {
-            muteButton.GetComponent<Image>().sprite = muteIcons[(int)MuteIconStates.unmuted];
+            muteButton.GetComponent<Image>().sprite = muteIcons[(int)MuteIconState.unmuted];
         }
     }
 }

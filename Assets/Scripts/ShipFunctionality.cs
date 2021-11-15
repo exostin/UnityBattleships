@@ -42,6 +42,6 @@ public class ShipFunctionality : MonoBehaviour, IPointerClickHandler
     public void ToggleFlag()
     {
         gm.enemy.board.BoardFields[VertCoord, HorCoord].FlagIsActive = !gm.enemy.board.BoardFields[VertCoord, HorCoord].FlagIsActive;
-        gm.RefreshBoard(2);
+        gm.RefreshBoard((int)BoardOwner.Enemy);
     }
 }
