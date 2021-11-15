@@ -1008,7 +1008,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 41.185, y: 41.185}
+  m_AnchoredPosition: {x: 41.18506, y: 41.184998}
   m_SizeDelta: {x: 82.36981, y: 82.36981}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &770562929
@@ -1510,11 +1510,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   audioClips:
-  - {fileID: 8300000, guid: cc7941879ec063045a6c7657f871b8f8, type: 3}
-  - {fileID: 8300000, guid: a368841b48fa4374a847dc76fb95ba4e, type: 3}
-  - {fileID: 8300000, guid: dd7aff3cf6eb01f42952276646b3fbdf, type: 3}
-  - {fileID: 8300000, guid: 34d96c3a6ba127e48ae9e12ab49481b6, type: 3}
-  - {fileID: 8300000, guid: ad05f153b776da04197ee964d7147a81, type: 3}
+  - {fileID: 8300000, guid: cdf6e8451d185e742a2fe4ba8226b6a8, type: 3}
+  - {fileID: 8300000, guid: f94e11f352d3b1d47b63d20605cc1a1a, type: 3}
+  - {fileID: 8300000, guid: f8c2701b21ba8444a893e265f6e45655, type: 3}
+  - {fileID: 8300000, guid: 2b99c8567019ee941bee3f294a7acb68, type: 3}
+  - {fileID: 8300000, guid: 74d18f936f690054fa4d07c8388e916f, type: 3}
   muteIcons:
   - {fileID: 21300000, guid: 3e49a683529ed284cb960ad7dc276a2e, type: 3}
   - {fileID: 21300000, guid: 2725d8b4a20a06543b5ddb5a944adb6a, type: 3}
