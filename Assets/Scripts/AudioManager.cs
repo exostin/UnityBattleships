@@ -1,9 +1,6 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 using UnityEngine.Audio;
+using UnityEngine.UI;
 
 public class AudioManager : MonoBehaviour
 {
@@ -39,11 +36,11 @@ public class AudioManager : MonoBehaviour
 
         if (volume == -80f)
         {
-            muteButton.GetComponent<Image>().sprite = muteIcons[(int)MuteIconState.muted];
+            muteButton.GetComponent<Image>().sprite = muteIcons[(int)MuteIconState.Muted];
         }
         else
         {
-            muteButton.GetComponent<Image>().sprite = muteIcons[(int)MuteIconState.unmuted];
+            muteButton.GetComponent<Image>().sprite = muteIcons[(int)MuteIconState.Unmuted];
         }
     }
 }

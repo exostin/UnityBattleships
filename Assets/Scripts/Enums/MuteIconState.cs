@@ -1,5 +1,5 @@
 public enum MuteIconState
 {
-    muted = 0,
-    unmuted = 1
+    Muted = 0,
+    Unmuted = 1
 }

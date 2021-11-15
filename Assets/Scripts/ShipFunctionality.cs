@@ -22,10 +22,6 @@ public class ShipFunctionality : MonoBehaviour, IPointerClickHandler
             ToggleFlag();
             gm.audioMg.PlaySound((int)SoundClips.Flag);
         }
-        //if (eventData.button == PointerEventData.InputButton.Left)
-        //{
-        //    SelectAttackCoordsByPlayer();
-        //}
     }
 
     public void SelectAttackCoordsByPlayer()
