@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.Audio;
 
 public enum MuteIconStates
 {
@@ -12,11 +13,14 @@ public enum MuteIconStates
 
 public class AudioManager : MonoBehaviour
 {
+    public AudioMixer audioMixer;
     public AudioClip[] audioClips;
     private AudioSource audioSrc;
-    private bool audioIsMuted = false;
     public Sprite[] muteIcons;
     public GameObject muteButton;
+    public GameObject slider;
+
+    private bool sliderActive = false;
 
     private void Start()
     {
@@ -25,16 +29,21 @@ public class AudioManager : MonoBehaviour
 
     public void PlaySound(int clipIndex)
     {
-        if (!audioIsMuted)
-        {
-            audioSrc.clip = audioClips[clipIndex];
-            audioSrc.Play();
-        }
+        audioSrc.clip = audioClips[clipIndex];
+        audioSrc.Play();
     }
-    public void ToggleMute()
+
+    public void ToggleSlider()
     {
-        audioIsMuted = !audioIsMuted;
-        if (audioIsMuted)
+        sliderActive = !sliderActive;
+        slider.SetActive(sliderActive);
+    }
+
+    public void ChangeVolume(float volume)
+    {
+        audioMixer.SetFloat("Volume", volume);
+
+        if (volume == -80f)
         {
             muteButton.GetComponent<Image>().sprite = muteIcons[(int)MuteIconStates.muted];
         }
@@ -42,6 +51,5 @@ public class AudioManager : MonoBehaviour
         {
             muteButton.GetComponent<Image>().sprite = muteIcons[(int)MuteIconStates.unmuted];
         }
-        
     }
 }
