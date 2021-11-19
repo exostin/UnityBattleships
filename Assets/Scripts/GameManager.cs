@@ -5,6 +5,8 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
+// 614465 background color
+
 public class GameManager : MonoBehaviour
 {
     [Header("Prefabs")]
