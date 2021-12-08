@@ -196,7 +196,7 @@ public class GameManager : MonoBehaviour
         Instantiate(loseCanvas);
         audioMg.PlaySound((int)SoundClips.Defeat);
         yield return new WaitForSeconds(resultScreenDuration);
-        SceneManager.LoadScene(0);
+        SceneManager.LoadScene(1);
     }
 
     private IEnumerator EnemyDefeat()
@@ -204,7 +204,7 @@ public class GameManager : MonoBehaviour
         Instantiate(winCanvas);
         audioMg.PlaySound((int)SoundClips.Victory);
         yield return new WaitForSeconds(resultScreenDuration);
-        SceneManager.LoadScene(0);
+        SceneManager.LoadScene(1);
     }
 
     public void LockPlayIfStringEmpty()
