@@ -8,7 +8,7 @@ You can play it online [here](https://exostin.github.io/UnityBattleships/)
 
 ### Attributions
 
-- Empty field, ship, shipwreck, miss and flag sprites created by: [Michal Cebula](https://github.com/MichaelCebula)
+- Pixel art created by: [Michal Cebula](https://github.com/MichaelCebula)
 
 - Victory and defeat sounds provided by Karol Domagała
 
