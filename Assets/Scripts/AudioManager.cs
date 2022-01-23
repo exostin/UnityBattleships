@@ -6,13 +6,13 @@ using UnityEngine.UI;
 public class AudioManager : MonoBehaviour
 {
     [SerializeField] private AudioMixer audioMixer;
-    private AudioSource _audioSrc;
     [SerializeField] private GameObject muteButton;
     [SerializeField] private GameObject volumeSlider;
     [SerializeField] private AudioClip[] audioClips;
     [SerializeField] private Sprite[] muteIcons;
+    private AudioSource _audioSrc;
 
-    private bool _sliderActive = false;
+    private bool _sliderActive;
 
     private void Start()
     {

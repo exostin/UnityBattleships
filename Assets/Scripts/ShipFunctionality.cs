@@ -21,14 +21,14 @@ public sealed class ShipFunctionality : MonoBehaviour, IPointerClickHandler
         if (eventData.button == PointerEventData.InputButton.Right)
         {
             ToggleFlag();
-            _gm.audioMg.PlaySound((int)SoundClips.Flag);
+            _gm.audioMg.PlaySound((int) SoundClips.Flag);
         }
     }
 
     public void SelectAttackCoordsByPlayer()
     {
-        if (_gm.enemy.board.BoardFields[VertCoord, HorCoord].Type != (int)BoardFieldType.Mishit
-            && _gm.enemy.board.BoardFields[VertCoord, HorCoord].Type != (int)BoardFieldType.Shipwreck)
+        if (_gm.enemy.board.BoardFields[VertCoord, HorCoord].Type != (int) BoardFieldType.Mishit
+            && _gm.enemy.board.BoardFields[VertCoord, HorCoord].Type != (int) BoardFieldType.Shipwreck)
         {
             _gm.PlayerVerticalAttackCoord = VertCoord;
             _gm.PlayerHorizontalAttackCoord = HorCoord;
@@ -38,7 +38,8 @@ public sealed class ShipFunctionality : MonoBehaviour, IPointerClickHandler
 
     private void ToggleFlag()
     {
-        _gm.enemy.board.BoardFields[VertCoord, HorCoord].FlagIsActive = !_gm.enemy.board.BoardFields[VertCoord, HorCoord].FlagIsActive;
-        _gm.RefreshBoard((int)BoardOwner.Enemy);
+        _gm.enemy.board.BoardFields[VertCoord, HorCoord].FlagIsActive =
+            !_gm.enemy.board.BoardFields[VertCoord, HorCoord].FlagIsActive;
+        _gm.RefreshBoard((int) BoardOwner.Enemy);
     }
 }

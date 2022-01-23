@@ -5,11 +5,10 @@ using UnityEngine.SceneManagement;
 
 public class PressAnyKey : MonoBehaviour
 {
-    public TextMeshProUGUI pressAnyKeyText;
-
     private const float DottingInterval = 0.6f;
-    private bool _dottingRunning = true;
+    public TextMeshProUGUI pressAnyKeyText;
     private string _dots;
+    private bool _dottingRunning = true;
 
     private void Start()
     {
@@ -28,7 +27,6 @@ public class PressAnyKey : MonoBehaviour
     private IEnumerator AnyKeyDotting()
     {
         while (_dottingRunning)
-        {
             for (var i = 0; i < 4; i++)
             {
                 _dots = new string('.', i);
@@ -36,6 +34,5 @@ public class PressAnyKey : MonoBehaviour
 
                 yield return new WaitForSeconds(DottingInterval);
             }
-        }
     }
 }

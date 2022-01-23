@@ -3,8 +3,8 @@ using UnityEngine.UI;
 
 public class GridManager : MonoBehaviour
 {
-    private GameManager _gm;
     [SerializeField] private GridLayoutGroup gl;
+    private GameManager _gm;
 
     public void SetGridLayoutConstraint()
     {
