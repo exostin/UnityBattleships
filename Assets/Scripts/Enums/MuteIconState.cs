@@ -1,5 +1,8 @@
-public enum MuteIconState
+namespace Enums
 {
-    Muted = 0,
-    Unmuted = 1
+    public enum MuteIconState
+    {
+        Muted = 0,
+        Unmuted = 1
+    }
 }

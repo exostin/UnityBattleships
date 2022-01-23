@@ -1,46 +1,42 @@
+using Enums;
 using UnityEngine;
 using UnityEngine.Audio;
 using UnityEngine.UI;
 
 public class AudioManager : MonoBehaviour
 {
-    public AudioMixer audioMixer;
-    private AudioSource audioSrc;
-    public GameObject muteButton;
-    public GameObject volumeSlider;
-    public AudioClip[] audioClips;
-    public Sprite[] muteIcons;
+    [SerializeField] private AudioMixer audioMixer;
+    private AudioSource _audioSrc;
+    [SerializeField] private GameObject muteButton;
+    [SerializeField] private GameObject volumeSlider;
+    [SerializeField] private AudioClip[] audioClips;
+    [SerializeField] private Sprite[] muteIcons;
 
-    private bool sliderActive = false;
+    private bool _sliderActive = false;
 
     private void Start()
     {
-        audioSrc = gameObject.GetComponent<AudioSource>();
+        _audioSrc = gameObject.GetComponent<AudioSource>();
     }
 
     public void PlaySound(int clipIndex)
     {
-        audioSrc.clip = audioClips[clipIndex];
-        audioSrc.Play();
+        _audioSrc.clip = audioClips[clipIndex];
+        _audioSrc.Play();
     }
 
     public void ToggleSlider()
     {
-        sliderActive = !sliderActive;
-        volumeSlider.SetActive(sliderActive);
+        _sliderActive = !_sliderActive;
+        volumeSlider.SetActive(_sliderActive);
     }
 
     public void ChangeVolume(float volume)
     {
         audioMixer.SetFloat("Volume", volume);
 
-        if (volume == -80f)
-        {
-            muteButton.GetComponent<Image>().sprite = muteIcons[(int)MuteIconState.Muted];
-        }
-        else
-        {
-            muteButton.GetComponent<Image>().sprite = muteIcons[(int)MuteIconState.Unmuted];
-        }
+        muteButton.GetComponent<Image>().sprite = volume == -80f
+            ? muteIcons[(int) MuteIconState.Muted]
+            : muteIcons[(int) MuteIconState.Unmuted];
     }
 }

@@ -7,9 +7,9 @@ public class PressAnyKey : MonoBehaviour
 {
     public TextMeshProUGUI pressAnyKeyText;
 
-    private float dottingInterval = 0.6f;
-    private bool dottingRunning = true;
-    private string dots;
+    private float _dottingInterval = 0.6f;
+    private bool _dottingRunning = true;
+    private string _dots;
 
     private void Start()
     {
@@ -20,21 +20,21 @@ public class PressAnyKey : MonoBehaviour
     {
         if (Input.anyKeyDown)
         {
-            dottingRunning = false;
+            _dottingRunning = false;
             SceneManager.LoadScene(1);
         }
     }
 
     private IEnumerator AnyKeyDotting()
     {
-        while (dottingRunning)
+        while (_dottingRunning)
         {
             for (int i = 0; i < 4; i++)
             {
-                dots = new string('.', i);
-                pressAnyKeyText.SetText("Press any key to continue" + dots);
+                _dots = new string('.', i);
+                pressAnyKeyText.SetText("Press any key to continue" + _dots);
 
-                yield return new WaitForSeconds(dottingInterval);
+                yield return new WaitForSeconds(_dottingInterval);
             }
         }
     }

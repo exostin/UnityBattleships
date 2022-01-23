@@ -1,28 +1,31 @@
-public class Player
+namespace Classes
 {
-    public Board board = new Board();
-
-    public int[] ChooseShipsConfiguration(int configurationIndex)
+    public class Player
     {
-        switch (configurationIndex)
+        public Board board = new Board();
+
+        public int[] ChooseShipsConfiguration(int configurationIndex)
         {
-            case 1:
-                return new int[] { 1, 2, 3, 4, 5 };
+            switch (configurationIndex)
+            {
+                case 1:
+                    return new int[] { 1, 2, 3, 4, 5 };
 
-            case 2:
-                return new int[] { 2, 2, 3, 4, 0 };
+                case 2:
+                    return new int[] { 2, 2, 3, 4, 0 };
 
-            case 3:
-                return new int[] { 3, 2, 4, 0, 0 };
+                case 3:
+                    return new int[] { 3, 2, 4, 0, 0 };
 
-            case 4:
-                return new int[] { 7, 0, 0, 0, 0 };
+                case 4:
+                    return new int[] { 7, 0, 0, 0, 0 };
 
-            case 5:
-                return new int[] { 0, 0, 0, 0, 35 };
+                case 5:
+                    return new int[] { 0, 0, 0, 0, 35 };
 
-            default:
-                return new int[] { 1, 2, 3, 4, 5 };
+                default:
+                    return new int[] { 1, 2, 3, 4, 5 };
+            }
         }
     }
 }
