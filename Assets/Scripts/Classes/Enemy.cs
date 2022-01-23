@@ -40,14 +40,14 @@ public class Enemy : Player
     /// </summary>
     public void DumbAI()
     {
-        int _vert = LastPlayerAttackCoords[0];
-        int _hor = LastPlayerAttackCoords[1];
+        int vert = LastPlayerAttackCoords[0];
+        int hor = LastPlayerAttackCoords[1];
 
-        if (PlayerBoardGrid[_vert, _hor].Type != (int)BoardFieldType.Mishit
-            && PlayerBoardGrid[_vert, _hor].Type != (int)BoardFieldType.Shipwreck)
+        if (PlayerBoardGrid[vert, hor].Type != (int)BoardFieldType.Mishit
+            && PlayerBoardGrid[vert, hor].Type != (int)BoardFieldType.Shipwreck)
         {
-            VerticalCoord = _vert;
-            HorizontalCoord = _hor;
+            VerticalCoord = vert;
+            HorizontalCoord = hor;
         }
         else
         {
@@ -81,13 +81,13 @@ public class Enemy : Player
     {
         while (true)
         {
-            int _vert = Random.Range(board.FirstGridPos, board.LastVerticalGridPos);
-            int _hor = Random.Range(board.FirstGridPos, board.LastHorizontalGridPos);
-            if (PlayerBoardGrid[_vert, _hor].Type != (int)BoardFieldType.Mishit
-                && PlayerBoardGrid[_vert, _hor].Type != (int)BoardFieldType.Shipwreck)
+            int vert = Random.Range(board.FirstGridPos, board.LastVerticalGridPos);
+            int hor = Random.Range(board.FirstGridPos, board.LastHorizontalGridPos);
+            if (PlayerBoardGrid[vert, hor].Type != (int)BoardFieldType.Mishit
+                && PlayerBoardGrid[vert, hor].Type != (int)BoardFieldType.Shipwreck)
             {
-                VerticalCoord = _vert;
-                HorizontalCoord = _hor;
+                VerticalCoord = vert;
+                HorizontalCoord = hor;
                 break;
             }
         }
