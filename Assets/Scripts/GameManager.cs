@@ -57,10 +57,6 @@ public class GameManager : MonoBehaviour
         {
             for (int j = 1; j < LastVerticalGridPos; j++)
             {
-                // No longer needed since using Grid Layout Grid component in Unity
-                //GameObject playerShip = Instantiate(playerShipPrefab, new Vector2(i * distanceBetweenTilesMultiplier,
-                //    Screen.height + (-j * distanceBetweenTilesMultiplier)), Quaternion.identity, playerBoardParent.transform);
-
                 GameObject playerShip = Instantiate(playerShipPrefab, playerBoardParent.transform);
                 playerShip.GetComponent<Image>().sprite = spriteList[_player.board.BoardFields[j, i].Type];
             }
@@ -70,15 +66,11 @@ public class GameManager : MonoBehaviour
     private void PrintEnemyGrid()
     {
         ClearBoard(enemyBoardParent);
-        for (int i = 1; i < LastHorizontalGridPos; i++)
+        for (var i = 1; i < LastHorizontalGridPos; i++)
         {
-            for (int j = 1; j < LastVerticalGridPos; j++)
+            for (var j = 1; j < LastVerticalGridPos; j++)
             {
-                // No longer needed since using Grid Layout Group component in Unity
-                //GameObject enemyShip = Instantiate(enemyShipPrefab, new Vector2((Screen.width / 2) + (i * distanceBetweenTilesMultiplier),
-                //    Screen.height + (-j * distanceBetweenTilesMultiplier)), Quaternion.identity, enemyBoardParent.transform);
-
-                GameObject enemyShip = Instantiate(enemyShipPrefab, enemyBoardParent.transform);
+                var enemyShip = Instantiate(enemyShipPrefab, enemyBoardParent.transform);
                 enemyShip.GetComponent<ShipFunctionality>().HorCoord = i;
                 enemyShip.GetComponent<ShipFunctionality>().VertCoord = j;
 

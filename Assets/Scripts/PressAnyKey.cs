@@ -7,7 +7,7 @@ public class PressAnyKey : MonoBehaviour
 {
     public TextMeshProUGUI pressAnyKeyText;
 
-    private float _dottingInterval = 0.6f;
+    private const float DottingInterval = 0.6f;
     private bool _dottingRunning = true;
     private string _dots;
 
@@ -29,12 +29,12 @@ public class PressAnyKey : MonoBehaviour
     {
         while (_dottingRunning)
         {
-            for (int i = 0; i < 4; i++)
+            for (var i = 0; i < 4; i++)
             {
                 _dots = new string('.', i);
                 pressAnyKeyText.SetText("Press any key to continue" + _dots);
 
-                yield return new WaitForSeconds(_dottingInterval);
+                yield return new WaitForSeconds(DottingInterval);
             }
         }
     }
