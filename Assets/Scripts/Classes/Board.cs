@@ -24,7 +24,7 @@ namespace Classes
             {
                 for (int j = 0; j < verticalSize; j++)
                 {
-                    BoardFields[j, i] = new Field((int)BoardFieldType.Empty, vert: j, hor: i);
+                    BoardFields[j, i] = new Field((int)BoardFieldType.Empty);
                 }
             }
 
@@ -43,7 +43,7 @@ namespace Classes
                     if (!CheckIfTheresSpaceForShip(randomVerticalStartPoint, randomHorizontalStartPoint))
                     {
                         BoardFields[randomVerticalStartPoint, randomHorizontalStartPoint] =
-                            new Field((int)BoardFieldType.Ship, randomVerticalStartPoint, randomHorizontalStartPoint);
+                            new Field((int)BoardFieldType.Ship);
                         i++;
                         break;
                     }

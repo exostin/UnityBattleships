@@ -2,7 +2,7 @@ using Enums;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-public class ShipFunctionality : MonoBehaviour, IPointerClickHandler
+public sealed class ShipFunctionality : MonoBehaviour, IPointerClickHandler
 {
     private GameManager _gm;
     public int OriginalValue { get; set; }
@@ -16,7 +16,7 @@ public class ShipFunctionality : MonoBehaviour, IPointerClickHandler
         _gm = FindObjectOfType<GameManager>();
     }
 
-    public virtual void OnPointerClick(PointerEventData eventData)
+    public void OnPointerClick(PointerEventData eventData)
     {
         if (eventData.button == PointerEventData.InputButton.Right)
         {
@@ -36,7 +36,7 @@ public class ShipFunctionality : MonoBehaviour, IPointerClickHandler
         }
     }
 
-    public void ToggleFlag()
+    private void ToggleFlag()
     {
         _gm.enemy.board.BoardFields[VertCoord, HorCoord].FlagIsActive = !_gm.enemy.board.BoardFields[VertCoord, HorCoord].FlagIsActive;
         _gm.RefreshBoard((int)BoardOwner.Enemy);

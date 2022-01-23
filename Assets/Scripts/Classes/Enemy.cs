@@ -34,14 +34,14 @@ namespace Classes
                     NormalAI();
                     break;
             }
-            AttackCoords = new int[] { VerticalCoord, HorizontalCoord };
+            AttackCoords = new[] { VerticalCoord, HorizontalCoord };
             return AttackCoords;
         }
 
         /// <summary>
         /// Mimic player attacks
         /// </summary>
-        public void DumbAI()
+        private void DumbAI()
         {
             int vert = LastPlayerAttackCoords[0];
             int hor = LastPlayerAttackCoords[1];
@@ -61,15 +61,15 @@ namespace Classes
         /// <summary>
         /// Attack positions that aren't near to other already hit positions
         /// </summary>
-        public void NormalAI()
+        private void NormalAI()
         {
             GenerateUnusedCoordsWithUnpopulatedNeighbours();
         }
 
         /// <summary>
-        /// Generate a guaranteed hit coordinates and have a small chance to reroll it
+        /// Generate a guaranteed hit coordinates and have a small chance to re-roll it
         /// </summary>
-        public void ImpossibleAI()
+        private void ImpossibleAI()
         {
             GeneratePopulatedCoords();
 
@@ -80,7 +80,7 @@ namespace Classes
             }
         }
 
-        public void GenerateUnusedCoords()
+        private void GenerateUnusedCoords()
         {
             while (true)
             {
@@ -96,7 +96,7 @@ namespace Classes
             }
         }
 
-        public void GenerateUnusedCoordsWithUnpopulatedNeighbours()
+        private void GenerateUnusedCoordsWithUnpopulatedNeighbours()
         {
             GenerateUnusedCoords();
             while (CheckForNeighbouringShipwrecks())
@@ -105,7 +105,7 @@ namespace Classes
             }
         }
 
-        public void GeneratePopulatedCoords()
+        private void GeneratePopulatedCoords()
         {
             while (PlayerBoardGrid[VerticalCoord, HorizontalCoord].Type != (int)BoardFieldType.Ship)
             {
@@ -113,7 +113,7 @@ namespace Classes
             }
         }
 
-        public bool CheckForNeighbouringShipwrecks()
+        private bool CheckForNeighbouringShipwrecks()
         {
             if ((PlayerBoardGrid[VerticalCoord + 1, HorizontalCoord].Type != (int)BoardFieldType.Shipwreck) &&
                 (PlayerBoardGrid[VerticalCoord - 1, HorizontalCoord].Type != (int)BoardFieldType.Shipwreck) &&
