@@ -1,14 +1,17 @@
-public class Field
+namespace Classes
 {
-    public int Type { get; set; }
-    public int VerticalCoord { get; set; }
-    public int HorizontalCoord { get; set; }
-    public bool FlagIsActive { get; set; }
-
-    public Field(int fieldType, int vert, int hor)
+    public class Field
     {
-        Type = fieldType;
-        VerticalCoord = vert;
-        HorizontalCoord = hor;
+        public int Type { get; set; }
+        public int VerticalCoord { get; set; }
+        public int HorizontalCoord { get; set; }
+        public bool FlagIsActive { get; set; }
+
+        public Field(int fieldType, int vert, int hor)
+        {
+            Type = fieldType;
+            VerticalCoord = vert;
+            HorizontalCoord = hor;
+        }
     }
 }

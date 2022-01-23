@@ -3,13 +3,13 @@ using UnityEngine.UI;
 
 public class GridManager : MonoBehaviour
 {
-    private GameManager gm;
-    public GridLayoutGroup gl;
+    private GameManager _gm;
+    [SerializeField] private GridLayoutGroup gl;
 
     public void SetGridLayoutConstraint()
     {
-        gm = FindObjectOfType<GameManager>();
+        _gm = FindObjectOfType<GameManager>();
         gl.constraint = GridLayoutGroup.Constraint.FixedColumnCount;
-        gl.constraintCount = gm.LastVerticalGridPos - 1;
+        gl.constraintCount = _gm.LastVerticalGridPos - 1;
     }
 }

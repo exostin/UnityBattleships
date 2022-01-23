@@ -1,8 +1,11 @@
-public enum BoardFieldType
+namespace Enums
 {
-    Empty = 0,
-    Ship = 1,
-    Mishit = 2,
-    Shipwreck = 3,
-    PlayerFlag = 4
+    public enum BoardFieldType
+    {
+        Empty = 0,
+        Ship = 1,
+        Mishit = 2,
+        Shipwreck = 3,
+        PlayerFlag = 4
+    }
 }

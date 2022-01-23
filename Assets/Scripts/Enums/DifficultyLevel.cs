@@ -1,6 +1,9 @@
-public enum DifficultyLevel
+namespace Enums
 {
-    Dumb = 0,
-    Normal = 1,
-    Impossible = 2
+    public enum DifficultyLevel
+    {
+        Dumb = 0,
+        Normal = 1,
+        Impossible = 2
+    }
 }

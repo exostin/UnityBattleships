@@ -1,56 +1,56 @@
 using System;
 using System.Collections;
+using Classes;
+using Enums;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
-// 614465 background color
-
 public class GameManager : MonoBehaviour
 {
     [Header("Prefabs")]
-    public GameObject enemyShipPrefab;
+    [SerializeField] private GameObject enemyShipPrefab;
 
-    public GameObject playerShipPrefab;
+    [SerializeField] private GameObject playerShipPrefab;
 
     [Header("Parents")]
-    public GameObject playerBoardParent;
+    [SerializeField] private GameObject playerBoardParent;
 
-    public GameObject enemyBoardParent;
+    [SerializeField] private GameObject enemyBoardParent;
 
     [Header("Canvases")]
-    public GameObject winCanvas;
+    [SerializeField] private GameObject winCanvas;
 
-    public GameObject loseCanvas;
+    [SerializeField] private GameObject loseCanvas;
 
     [Header("UI")]
-    public TextMeshProUGUI turnCounterText;
+    [SerializeField] private TextMeshProUGUI turnCounterText;
 
-    public Button playButton;
-    public Sprite[] spriteList;
+    [SerializeField] private Button playButton;
+    [SerializeField] private Sprite[] spriteList;
 
     [Header("Other")]
     public AudioManager audioMg;
 
-    public Player player = new Player();
-    public Enemy enemy = new Enemy();
+    private readonly Player _player = new Player();
+    public readonly Enemy enemy = new Enemy();
     public string BoardVerticalSize { get; set; }
     public string BoardHorizontalSize { get; set; }
-    public int LastHorizontalGridPos { get; set; }
-    public int LastVerticalGridPos { get; set; }
+    private int LastHorizontalGridPos { get; set; }
+    public int LastVerticalGridPos { get; private set; }
     public int PlayerVerticalAttackCoord { get; set; }
     public int PlayerHorizontalAttackCoord { get; set; }
     public int DifficultyIndex { get; set; } = (int)DifficultyLevel.Normal;
-    public int ShipConfigurationIndex { get; set; } = 1;
+    private int ShipConfigurationIndex { get; set; } = 1;
 
-    private const int minBoardSize = 2;
-    private const int maxBoardSize = 10;
-    private const float resultScreenDuration = 2.8f;
+    private const int MinBoardSize = 2;
+    private const int MaxBoardSize = 10;
+    private const float ResultScreenDuration = 2.8f;
 
-    private int turnCount = 1;
+    private int _turnCount = 1;
 
-    public void PrintPlayerGrid()
+    private void PrintPlayerGrid()
     {
         ClearBoard(playerBoardParent);
         for (int i = 1; i < LastHorizontalGridPos; i++)
@@ -62,12 +62,12 @@ public class GameManager : MonoBehaviour
                 //    Screen.height + (-j * distanceBetweenTilesMultiplier)), Quaternion.identity, playerBoardParent.transform);
 
                 GameObject playerShip = Instantiate(playerShipPrefab, playerBoardParent.transform);
-                playerShip.GetComponent<Image>().sprite = spriteList[player.board.BoardFields[j, i].Type];
+                playerShip.GetComponent<Image>().sprite = spriteList[_player.board.BoardFields[j, i].Type];
             }
         }
     }
 
-    public void PrintEnemyGrid()
+    private void PrintEnemyGrid()
     {
         ClearBoard(enemyBoardParent);
         for (int i = 1; i < LastHorizontalGridPos; i++)
@@ -100,10 +100,10 @@ public class GameManager : MonoBehaviour
 
     public void MakeTurn()
     {
-        var _hitSuccess = enemy.board.LaunchAttack(PlayerVerticalAttackCoord, PlayerHorizontalAttackCoord);
+        var hitSuccess = enemy.board.LaunchAttack(PlayerVerticalAttackCoord, PlayerHorizontalAttackCoord);
         if (DifficultyIndex == (int)DifficultyLevel.Dumb)
         {
-            enemy.LastPlayerAttackCoords = new int[] { PlayerVerticalAttackCoord, PlayerHorizontalAttackCoord };
+            enemy.LastPlayerAttackCoords = new[] { PlayerVerticalAttackCoord, PlayerHorizontalAttackCoord };
         }
 
         RefreshBoard((int)BoardOwner.Enemy);
@@ -112,7 +112,7 @@ public class GameManager : MonoBehaviour
             StartCoroutine(EnemyDefeat());
             return;
         }
-        if (_hitSuccess)
+        if (hitSuccess)
         {
             audioMg.PlaySound((int)SoundClips.Hit);
             return;
@@ -128,33 +128,33 @@ public class GameManager : MonoBehaviour
     {
         while (true)
         {
-            int[] _enemyAttackCoords = enemy.DoAnAttack();
-            var _hitSuccess = player.board.LaunchAttack(_enemyAttackCoords[0], _enemyAttackCoords[1]);
+            int[] enemyAttackCoords = enemy.DoAnAttack();
+            var hitSuccess = _player.board.LaunchAttack(enemyAttackCoords[0], enemyAttackCoords[1]);
             RefreshBoard((int)BoardOwner.Player);
-            if (player.board.CheckIfDefeated())
+            if (_player.board.CheckIfDefeated())
             {
                 StartCoroutine(PlayerDefeat());
                 return;
             }
 
-            if (!_hitSuccess)
+            if (!hitSuccess)
             {
                 break;
             }
         }
 
-        turnCount++;
+        _turnCount++;
         ShowTurn();
     }
 
     public void PlayButton()
     {
         enemy.CurrentDifficulty = DifficultyIndex;
-        enemy.board.PopulateBoard(player.ChooseShipsConfiguration(ShipConfigurationIndex), Convert.ToInt32(BoardVerticalSize) + 2, Convert.ToInt32(BoardHorizontalSize) + 2);
-        player.board.PopulateBoard(player.ChooseShipsConfiguration(ShipConfigurationIndex), Convert.ToInt32(BoardVerticalSize) + 2, Convert.ToInt32(BoardHorizontalSize) + 2);
-        LastHorizontalGridPos = player.board.LastHorizontalGridPos;
-        LastVerticalGridPos = player.board.LastVerticalGridPos;
-        enemy.PlayerBoardGrid = player.board.BoardFields;
+        enemy.board.PopulateBoard(_player.ChooseShipsConfiguration(ShipConfigurationIndex), Convert.ToInt32(BoardVerticalSize) + 2, Convert.ToInt32(BoardHorizontalSize) + 2);
+        _player.board.PopulateBoard(_player.ChooseShipsConfiguration(ShipConfigurationIndex), Convert.ToInt32(BoardVerticalSize) + 2, Convert.ToInt32(BoardHorizontalSize) + 2);
+        LastHorizontalGridPos = _player.board.LastHorizontalGridPos;
+        LastVerticalGridPos = _player.board.LastVerticalGridPos;
+        enemy.PlayerBoardGrid = _player.board.BoardFields;
 
         RefreshBoard();
         ShowTurn();
@@ -186,16 +186,16 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    public void ShowTurn()
+    private void ShowTurn()
     {
-        turnCounterText.text = "Turn: " + turnCount;
+        turnCounterText.text = "Turn: " + _turnCount;
     }
 
     private IEnumerator PlayerDefeat()
     {
         Instantiate(loseCanvas);
         audioMg.PlaySound((int)SoundClips.Defeat);
-        yield return new WaitForSeconds(resultScreenDuration);
+        yield return new WaitForSeconds(ResultScreenDuration);
         SceneManager.LoadScene(1);
     }
 
@@ -203,14 +203,14 @@ public class GameManager : MonoBehaviour
     {
         Instantiate(winCanvas);
         audioMg.PlaySound((int)SoundClips.Victory);
-        yield return new WaitForSeconds(resultScreenDuration);
+        yield return new WaitForSeconds(ResultScreenDuration);
         SceneManager.LoadScene(1);
     }
 
     public void LockPlayIfStringEmpty()
     {
-        if (BoardHorizontalSize != null && BoardHorizontalSize.Length > 0 &&
-            Convert.ToInt32(BoardHorizontalSize) >= minBoardSize && Convert.ToInt32(BoardHorizontalSize) <= maxBoardSize)
+        if (!string.IsNullOrEmpty(BoardHorizontalSize) &&
+            Convert.ToInt32(BoardHorizontalSize) >= MinBoardSize && Convert.ToInt32(BoardHorizontalSize) <= MaxBoardSize)
         {
             playButton.interactable = true;
         }

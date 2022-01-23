@@ -1,5 +1,8 @@
-public enum BoardOwner
+namespace Enums
 {
-    Player = 1,
-    Enemy = 2
+    public enum BoardOwner
+    {
+        Player = 1,
+        Enemy = 2
+    }
 }

@@ -1,9 +1,10 @@
+using Enums;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
 public class ShipFunctionality : MonoBehaviour, IPointerClickHandler
 {
-    private GameManager gm;
+    private GameManager _gm;
     public int OriginalValue { get; set; }
     public int VertCoord { get; set; }
     public int HorCoord { get; set; }
@@ -12,7 +13,7 @@ public class ShipFunctionality : MonoBehaviour, IPointerClickHandler
 
     private void Start()
     {
-        gm = FindObjectOfType<GameManager>();
+        _gm = FindObjectOfType<GameManager>();
     }
 
     public virtual void OnPointerClick(PointerEventData eventData)
@@ -20,24 +21,24 @@ public class ShipFunctionality : MonoBehaviour, IPointerClickHandler
         if (eventData.button == PointerEventData.InputButton.Right)
         {
             ToggleFlag();
-            gm.audioMg.PlaySound((int)SoundClips.Flag);
+            _gm.audioMg.PlaySound((int)SoundClips.Flag);
         }
     }
 
     public void SelectAttackCoordsByPlayer()
     {
-        if (gm.enemy.board.BoardFields[VertCoord, HorCoord].Type != (int)BoardFieldType.Mishit
-            && gm.enemy.board.BoardFields[VertCoord, HorCoord].Type != (int)BoardFieldType.Shipwreck)
+        if (_gm.enemy.board.BoardFields[VertCoord, HorCoord].Type != (int)BoardFieldType.Mishit
+            && _gm.enemy.board.BoardFields[VertCoord, HorCoord].Type != (int)BoardFieldType.Shipwreck)
         {
-            gm.PlayerVerticalAttackCoord = VertCoord;
-            gm.PlayerHorizontalAttackCoord = HorCoord;
-            gm.MakeTurn();
+            _gm.PlayerVerticalAttackCoord = VertCoord;
+            _gm.PlayerHorizontalAttackCoord = HorCoord;
+            _gm.MakeTurn();
         }
     }
 
     public void ToggleFlag()
     {
-        gm.enemy.board.BoardFields[VertCoord, HorCoord].FlagIsActive = !gm.enemy.board.BoardFields[VertCoord, HorCoord].FlagIsActive;
-        gm.RefreshBoard((int)BoardOwner.Enemy);
+        _gm.enemy.board.BoardFields[VertCoord, HorCoord].FlagIsActive = !_gm.enemy.board.BoardFields[VertCoord, HorCoord].FlagIsActive;
+        _gm.RefreshBoard((int)BoardOwner.Enemy);
     }
 }
