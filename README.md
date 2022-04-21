@@ -4,8 +4,6 @@ Unity (2020.3.21f1) port of my [console battleships game](https://github.com/exo
 
 You can play it online [here](https://exostin.github.io/UnityBattleships/)
 
-<br>
-
 ### Attributions
 
 - Pixel art created by: [Michal Cebula](https://github.com/MichaelCebula)
