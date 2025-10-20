@@ -12,7 +12,7 @@ PlayerSettings:
   targetDevice: 2
   useOnDemandResources: 0
   accelerometerFrequency: 60
-  companyName: Damian Dorosz
+  companyName: Battleships
   productName: Battleships
   defaultCursor: {fileID: 0}
   cursorHotspot: {x: 0, y: 0}
